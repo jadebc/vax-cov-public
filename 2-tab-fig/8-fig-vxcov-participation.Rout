@@ -1,0 +1,130 @@
+
+R version 3.6.1 (2019-07-05) -- "Action of the Toes"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> ########################################
+> # Shoo the Flu evaluation
+> # Analysis of student influenza vaccination coverage 
+> 
+> # Plot of association between vaccination coverage
+> # and school participation in intervention
+> ########################################
+> 
+> rm(list = ls())
+> # define directories, load libraries
+> source(here::here("0-config.R"))
+here() starts at /Users/jadederong/Documents/CRG/flu/vax-cov-public
+
+Attaching package: ‘plyr’
+
+The following object is masked from ‘package:here’:
+
+    here
+
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:plyr’:
+
+    arrange, count, desc, failwith, id, mutate, rename, summarise,
+    summarize
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+
+Attaching package: ‘reshape2’
+
+The following object is masked from ‘package:tidyr’:
+
+    smiths
+
+Loading required package: nnls
+Super Learner
+Version: 2.0-24
+Package created on 2018-08-10
+
+gdata: read.xls support for 'XLS' (Excel 97-2004) files ENABLED.
+
+gdata: read.xls support for 'XLSX' (Excel 2007+) files ENABLED.
+
+Attaching package: ‘gdata’
+
+The following objects are masked from ‘package:dplyr’:
+
+    combine, first, last
+
+The following object is masked from ‘package:stats’:
+
+    nobs
+
+The following object is masked from ‘package:utils’:
+
+    object.size
+
+The following object is masked from ‘package:base’:
+
+    startsWith
+
+Loading required package: MASS
+
+Attaching package: ‘MASS’
+
+The following object is masked from ‘package:dplyr’:
+
+    select
+
+## 
+##  Matching (Version 4.9-6, Build Date: 2019-04-07)
+##  See http://sekhon.berkeley.edu/matching for additional documentation.
+##  Please cite software as:
+##   Jasjeet S. Sekhon. 2011. ``Multivariate and Propensity Score Matching
+##   Software with Automated Balance Optimization: The Matching package for R.''
+##   Journal of Statistical Software, 42(7): 1-52. 
+##
+
+> 
+> data = read.csv(file = coverage_participation_data_path)
+> sl_pred_df = readRDS(vax_coverage_participation)
+> 
+> data = data %>% mutate(
++   coverage = coverage * 100,
++   participation = participation * 100)
+> 
+> pdf(file=paste0(plot_path,"fig-vxcov-participation.pdf"),width=10,height=3)
+> ggplot(sl_pred_df, aes(x = participation, y = pred)) + 
++   geom_line() + 
++   geom_point(data = data, aes(x = participation, y = coverage), alpha = 0.5) + 
++   facet_grid(~schoolyr) +
++   ylab("Adjusted school-level\ninfluenza vaccination coverage") +
++   xlab("Percent of students participating in school-located influenza vaccination") +
++   theme_bw()
+> dev.off()
+null device 
+          1 
+> 
+> proc.time()
+   user  system elapsed 
+  1.157   0.145   1.307 

@@ -1,0 +1,188 @@
+
+R version 3.6.1 (2019-07-05) -- "Action of the Toes"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> ########################################
+> # Shoo the Flu evaluation
+> # Analysis of student influenza vaccination coverage 
+> 
+> # Distribution of student race in 2017 survey
+> ########################################
+> 
+> rm(list=ls())
+> 
+> # define directories, load libraries
+> source(here::here("0-config.R"))
+here() starts at /Users/jadederong/Documents/CRG/flu/vax-cov-public
+
+Attaching package: ‘plyr’
+
+The following object is masked from ‘package:here’:
+
+    here
+
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:plyr’:
+
+    arrange, count, desc, failwith, id, mutate, rename, summarise,
+    summarize
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+
+Attaching package: ‘reshape2’
+
+The following object is masked from ‘package:tidyr’:
+
+    smiths
+
+Loading required package: nnls
+Super Learner
+Version: 2.0-24
+Package created on 2018-08-10
+
+gdata: read.xls support for 'XLS' (Excel 97-2004) files ENABLED.
+
+gdata: read.xls support for 'XLSX' (Excel 2007+) files ENABLED.
+
+Attaching package: ‘gdata’
+
+The following objects are masked from ‘package:dplyr’:
+
+    combine, first, last
+
+The following object is masked from ‘package:stats’:
+
+    nobs
+
+The following object is masked from ‘package:utils’:
+
+    object.size
+
+The following object is masked from ‘package:base’:
+
+    startsWith
+
+Loading required package: MASS
+
+Attaching package: ‘MASS’
+
+The following object is masked from ‘package:dplyr’:
+
+    select
+
+## 
+##  Matching (Version 4.9-6, Build Date: 2019-04-07)
+##  See http://sekhon.berkeley.edu/matching for additional documentation.
+##  Please cite software as:
+##   Jasjeet S. Sekhon. 2011. ``Multivariate and Propensity Score Matching
+##   Software with Automated Balance Optimization: The Matching package for R.''
+##   Journal of Statistical Software, 42(7): 1-52. 
+##
+
+> 
+> data = read.csv(data_path_2017)
+> 
+> load(district_demographics_path)
+> 
+> #relabel edu categories
+> data$race=as.character(data$race)
+> data$race[data$race=="Black"]="African American"
+> data$race[data$race=="Multi"]="Multiple"
+> data$race[data$race=="Missing"]="Not reported"
+> data$race=as.factor(data$race)
+> svy.race=as.data.frame(prop.table(table(data$race,data$dist),2)*100)
+> colnames(svy.race)=c("race","dist","per")
+> svy.race$type="Survey"
+> svy.race$dist = as.character(svy.race$dist)
+> svy.race$dist[svy.race$dist=="OUSD"] = "Intervention district"
+> svy.race$dist[svy.race$dist=="WCCUSD"] = "Comparison district"
+> 
+> dist.race.l=melt(dist.race)
+Using lab as id variables
+> dist.race.s.l=melt(dist.race.s)
+Using lab as id variables
+> colnames(dist.race.l)=c("race","dist","per")
+> colnames(dist.race.s.l)=c("race","dist","per")
+> 
+> dist.race.l$dist=as.character(dist.race.l$dist)
+> dist.race.l$dist[dist.race.l$dist=="oak"]="Intervention district"
+> dist.race.l$dist[dist.race.l$dist=="wcc"]="Comparison district"
+> dist.race.l$type="Entire district"
+> 
+> dist.race.s.l$dist=as.character(dist.race.s.l$dist)
+> dist.race.s.l$dist[dist.race.s.l$dist=="oak"]="Intervention district"
+> dist.race.s.l$dist[dist.race.s.l$dist=="wcc"]="Comparison district"
+> dist.race.s.l$type="Schools\nin sample"
+> 
+> race=rbind(svy.race,dist.race.l,dist.race.s.l)
+> race$race[race$race=="Pacific islander"]="Pacific Islander"
+> race$race.f=factor(race$race,levels=c("Latino","African American","Asian",
++       "White","Multiple","Native American","Pacific Islander","Not reported"))
+> 
+> race$per.f=sprintf("%0.0f",race$per)
+> 
+> race=race[order(race$type,race$dist,race$race.f),]
+> 
+> race$printper=c(
++   # Comparison, entire district
++   75,38,22,8,0,0,0,0,
++   # Intervention, entire district
++   78,44,25,13,0,0,0,0,
++   # Comparison, schools in sample
++   74,37,18,6,0,0,0,0,
++   # Intervention, schools in sample
++   78,44,18,9,0,0,0,0,
++   # Comparison, surveys
++   75,44,30,19,9,0,0,0,
++   # Intervention, surveys
++   78,50,31,17,8,0,0,0)
+> 
+> race$per.f[race$race=="Native American"]=""
+> race$per.f[race$race=="Pacific Islander"]=""
+> race$per.f[race$race=="Not reported"]=""
+> race$per.f[race$race=="Multiple" & race$type=="Entire district"]=""
+> race$per.f[race$race=="Multiple" & race$type=="Schools\nin sample"]=""
+> 
+> pdf(file=paste0(plot_path, "fig-vxcov-std-race.pdf"),width=8,height=4)
+> ggplot(race,aes(y=per,x=type,fill=race.f))+geom_bar(stat="identity",width=.7)+
++   theme_complete_bw()+ylab("Percent")+xlab("")+
++   geom_text(mapping=aes(label=per.f,y=printper),size=3,show.legend=FALSE)+
++   facet_grid(~dist)+theme(legend.title=element_blank()) +
++   theme(
++     strip.text.x = element_text(size=14)
++   )
+> dev.off()
+null device 
+          1 
+> 
+> 
+> 
+> proc.time()
+   user  system elapsed 
+  1.378   0.147   1.528 

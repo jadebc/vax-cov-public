@@ -1,0 +1,165 @@
+
+R version 3.6.1 (2019-07-05) -- "Action of the Toes"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> ########################################
+> # Shoo the Flu evaluation
+> # Analysis of student influenza vaccination coverage 
+> 
+> # Table: vaccination coverage by year
+> ########################################
+> rm(list=ls())
+> 
+> # define directories, load libraries
+> source(here::here("0-config.R"))
+here() starts at /Users/jadederong/Documents/CRG/flu/vax-cov-public
+
+Attaching package: ‘plyr’
+
+The following object is masked from ‘package:here’:
+
+    here
+
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:plyr’:
+
+    arrange, count, desc, failwith, id, mutate, rename, summarise,
+    summarize
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+
+Attaching package: ‘reshape2’
+
+The following object is masked from ‘package:tidyr’:
+
+    smiths
+
+Loading required package: nnls
+Super Learner
+Version: 2.0-24
+Package created on 2018-08-10
+
+gdata: read.xls support for 'XLS' (Excel 97-2004) files ENABLED.
+
+gdata: read.xls support for 'XLSX' (Excel 2007+) files ENABLED.
+
+Attaching package: ‘gdata’
+
+The following objects are masked from ‘package:dplyr’:
+
+    combine, first, last
+
+The following object is masked from ‘package:stats’:
+
+    nobs
+
+The following object is masked from ‘package:utils’:
+
+    object.size
+
+The following object is masked from ‘package:base’:
+
+    startsWith
+
+Loading required package: MASS
+
+Attaching package: ‘MASS’
+
+The following object is masked from ‘package:dplyr’:
+
+    select
+
+## 
+##  Matching (Version 4.9-6, Build Date: 2019-04-07)
+##  See http://sekhon.berkeley.edu/matching for additional documentation.
+##  Please cite software as:
+##   Jasjeet S. Sekhon. 2011. ``Multivariate and Propensity Score Matching
+##   Software with Automated Balance Optimization: The Matching package for R.''
+##   Journal of Statistical Software, 42(7): 1-52. 
+##
+
+> 
+> # load y1-3 coverage
+> load(vax_results_2017_path)
+> 
+> # load y4 coverage
+> load(vax_results_2018_path)
+> 
+> # load difference results
+> load(vax_standardized_results_path)
+> 
+> rename_cols = function(data){
++   data = data %>% rename(
++     pt.est = Mean,
++     lb = `Lower 95%CI`,
++     ub = `Upper 95%CI`, )
++   return(data)
++ }
+> 
+> vx.y1.o = rename_cols(vx.y1.o)
+> vx.y1.w = rename_cols(vx.y1.w)
+> 
+> vx.y2.o = rename_cols(vx.y2.o)
+> vx.y2.w = rename_cols(vx.y2.w)
+> 
+> vx.y3.o = rename_cols(vx.y3.o)
+> vx.y3.w = rename_cols(vx.y3.w)
+> 
+> vx.y4.o = rename_cols(vx.y4.o)
+> vx.y4.w = rename_cols(vx.y4.w)
+> 
+> ousd_res = data.frame(rbind(vx.y1.o, vx.y2.o, vx.y3.o, vx.y4.o))
+> wcc_res = data.frame(rbind(vx.y1.w, vx.y2.w, vx.y3.w, vx.y4.w))
+> diff_res=data.frame(rbind(res.vx.y1,res.vx.y2,res.vx.y3,res.vx.y4))
+> 
+> 
+> pt.est.ci.f = function(df,decimals,scale){
++   df = as.data.frame(df)
++   a=sprintf(paste("%0.0",decimals,"f",sep=""),df$pt.est*scale)
++   b=sprintf(paste("%0.0",decimals,"f",sep=""),df$lb*scale)
++   c=sprintf(paste("%0.0",decimals,"f",sep=""),df$ub*scale)
++   return(paste(a," (",b,", ",c,")",sep=""))
++ }
+> 
+> 
+> tab = data.frame(
++   ousd = pt.est.ci.f(df = ousd_res, decimals = 0, scale = 100),
++   wcc = pt.est.ci.f(df = wcc_res, decimals = 0, scale = 100),
++   diff = pt.est.ci.f(diff_res, decimals = 0, scale = 100)
++ )
+> 
+> tab = tab %>% mutate(yr=c("2014-15","2015-16","2016-17","2017-18")) %>%
++   dplyr::select(yr, ousd, wcc, diff)
+> 
+> write.csv(tab, file = paste0(tab_path, "vaxcov_diff.csv"))
+> 
+> 
+> proc.time()
+   user  system elapsed 
+  1.057   0.189   1.413 

@@ -1,0 +1,271 @@
+
+R version 3.6.1 (2019-07-05) -- "Action of the Toes"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> ########################################
+> # Shoo the Flu evaluation
+> # Analysis of student influenza vaccination coverage 
+> 
+> # Fit smoother between vaccination coverage
+> # and school participation in the intervention
+> ########################################
+> 
+> rm(list = ls())
+> # define directories, load libraries
+> source(here::here("0-config.R"))
+here() starts at /Users/jadederong/Documents/CRG/flu/vax-cov-public
+
+Attaching package: ‘plyr’
+
+The following object is masked from ‘package:here’:
+
+    here
+
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:plyr’:
+
+    arrange, count, desc, failwith, id, mutate, rename, summarise,
+    summarize
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+
+Attaching package: ‘reshape2’
+
+The following object is masked from ‘package:tidyr’:
+
+    smiths
+
+Loading required package: nnls
+Super Learner
+Version: 2.0-24
+Package created on 2018-08-10
+
+gdata: read.xls support for 'XLS' (Excel 97-2004) files ENABLED.
+
+gdata: read.xls support for 'XLSX' (Excel 2007+) files ENABLED.
+
+Attaching package: ‘gdata’
+
+The following objects are masked from ‘package:dplyr’:
+
+    combine, first, last
+
+The following object is masked from ‘package:stats’:
+
+    nobs
+
+The following object is masked from ‘package:utils’:
+
+    object.size
+
+The following object is masked from ‘package:base’:
+
+    startsWith
+
+Loading required package: MASS
+
+Attaching package: ‘MASS’
+
+The following object is masked from ‘package:dplyr’:
+
+    select
+
+## 
+##  Matching (Version 4.9-6, Build Date: 2019-04-07)
+##  See http://sekhon.berkeley.edu/matching for additional documentation.
+##  Please cite software as:
+##   Jasjeet S. Sekhon. 2011. ``Multivariate and Propensity Score Matching
+##   Software with Automated Balance Optimization: The Matching package for R.''
+##   Journal of Statistical Software, 42(7): 1-52. 
+##
+
+> 
+> data = read.csv(file = coverage_participation_data_path)
+> 
+> #----------------------------------------------------
+> # function to predict Superlearner fit for each level of
+> # participation
+> 
+> # inputs:
+> # slfit: fit from Superlearner
+> # data: data from fed into Superlearner
+> # covars: covariates fed into Superlearner
+> # outcome: string for outcome variable name
+> 
+> # output: data frame with the predicted value for 
+> # each level of A
+> #----------------------------------------------------
+> predict_sl_A =  function(slfit, data, covars, outcome) {
++   
++   newdat = data 
++   As <- unique(data$participation)
++   pY <- rep(NA, length(As))
++   for (i in 1:length(As)) {
++     newdat$participation <- As[i]
++     
++     # this is required by prediction since it is added
++     # by sl3
++     newdat$delta_participation <- 0
++     pred_task <- make_sl3_Task(
++       data = newdat,
++       covariates = c(covars,"delta_participation"),
++       outcome = outcome
++     )
++     
++     pYs <- slfit$predict(pred_task)
++     
++     pY[i] <- mean(pYs)
++   }
++   return(pY)
++ }
+> 
+> #----------------------------------------------------
+> # function to obtain Superlearner fit for each level of
+> # participation
+> 
+> # inputs:
+> # data: data from fed into Superlearner
+> # covars: covariates fed into Superlearner
+> # outcome: string for outcome variable name
+> 
+> # output: data frame with the predicted value for 
+> # each level of A
+> #----------------------------------------------------
+> fit_sl3 = function(data, outcome, covars){
++   
++   # create the main task
++   main_task <- make_sl3_Task(
++     data = data,
++     covariates = covars,
++     outcome = outcome
++   )
++   
++   # choose base learners
++   lrnr_glm <- make_learner(Lrnr_glm)
++   lrnr_mean <- make_learner(Lrnr_mean)
++   lrnr_glmnet <- make_learner(Lrnr_glmnet)
++   lrnr_xgboost <- make_learner(Lrnr_xgboost, nrounds=50, learning_rate = 0.01)
++   
++   lrnr_gam <- Lrnr_pkg_SuperLearner$new("SL.gam")
++   lrnr_bayesglm <- Lrnr_pkg_SuperLearner$new("SL.bayesglm")
++   lrnr_stepAIC <- Lrnr_pkg_SuperLearner$new("SL.stepAIC")
++ 
++   stack <- make_learner(
++     Stack,
++     lrnr_glm, lrnr_mean, lrnr_glmnet, lrnr_bayesglm,
++     lrnr_bayesglm, lrnr_stepAIC, lrnr_gam
++   )
++   
++   # define metalearner
++   metalearner <- make_learner(Lrnr_nnls)
++   
++   # covariate screening 
++   screen_cor <- Lrnr_pkg_SuperLearner_screener$new("screen.corP")
++   
++   # print selected covariates
++   screen_cor$train(main_task)
++   cor_pipeline <- make_learner(Pipeline, screen_cor, stack)
++   
++   # stack after pre-screening
++   fancy_stack <- make_learner(Stack, cor_pipeline, stack)
++   
++   # make superlearner
++   sl <- make_learner(Lrnr_sl,
++                      learners = fancy_stack,
++                      metalearner = metalearner
++   )
++   
++   # train superlearner
++   sl_fit <- sl$train(main_task)
++   
++   # obtain predicted values at each value of participation
++   A_pred = predict_sl_A(slfit = sl_fit, 
++                         data = data, 
++                         covars = covars,
++                         outcome = outcome)
++   
++   out = data.frame(
++     schoolyr = unique(data$schoolyr),
++     participation = unique(data$participation), 
++     pred = A_pred
++   )
++   
++   out = out %>% mutate(
++     schoolyr = as.character(schoolyr)
++   )
++   
++   return(out)
++ }
+> 
+> #----------------------------------------------------
+> # Run Superlearner
+> #----------------------------------------------------
+> data = data %>% rename(schoolyr = year)
+> 
+> data_list = list(
++   y1 = data %>% filter(schoolyr=="2014-15"),
++   y2 = data %>% filter(schoolyr=="2015-16"),
++   y3 = data %>% filter(schoolyr=="2016-17"),
++   y4 = data %>% filter(schoolyr=="2017-18")
++ )
+> 
+> # specify the outcome and covariates
+> covars <- colnames(data)[-which(names(data) %in% 
++                                     c("schoolyr","school","absent_all","absent_ill","date","dist.n","dist",
++                                       "week","yr","fluseasCDC","fluseasCDPH_2","fluseasCDPH_2.5",
++                                       "fluseasCDPH_3","peakwk_2","peakwk_2.5","peakwk_3",
++                                       "flusesn","matchid",
++                                       "coverage","district","grades"))]
+> covars
+ [1] "X"                "participation"    "enrolled"         "mn.class.size"   
+ [5] "per.Not.reported" "per.NativeAmer"   "per.Asian"        "per.PI"          
+ [9] "per.Filipino"     "per.Hispanic"     "per.AfAmer"       "per.White"       
+[13] "per.Twoplus"      "per.not_hsg"      "per.hsg"          "per.some_col"    
+[17] "per.col_grad"     "per.grad_sch"     "per.englearn"     "per.freelunch"   
+[21] "API13"            "API12"            "mean.cst.ela"     "per.adv.ela"     
+[25] "per.basic.ela"    "mean.cst.m"       "per.adv.m"        "per.basic.m"     
+> 
+> set.seed(199999)
+> sl_pred = lapply(data_list, function(x) 
++   fit_sl3(data = x, outcome = "coverage", covars = covars))
+There were 50 or more warnings (use warnings() to see the first 50)
+> 
+> sl_pred_df = bind_rows(sl_pred)
+> 
+> sl_pred_df = sl_pred_df %>% mutate(
++   participation = participation * 100,
++   pred = pred *100
++   )
+> 
+> saveRDS(sl_pred_df, vax_coverage_participation)
+> 
+> 
+> proc.time()
+   user  system elapsed 
+145.166   1.588  42.039 

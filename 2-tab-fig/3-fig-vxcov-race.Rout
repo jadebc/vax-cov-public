@@ -1,0 +1,187 @@
+
+R version 3.6.1 (2019-07-05) -- "Action of the Toes"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> ########################################
+> # Shoo the Flu evaluation
+> # Analysis of student influenza vaccination coverage 
+> 
+> # Create figures showing vaccination coverage by race
+> ########################################
+> 
+> rm(list=ls())
+> # define directories, load libraries
+> source(here::here("0-config.R"))
+here() starts at /Users/jadederong/Documents/CRG/flu/vax-cov-public
+
+Attaching package: ‘plyr’
+
+The following object is masked from ‘package:here’:
+
+    here
+
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:plyr’:
+
+    arrange, count, desc, failwith, id, mutate, rename, summarise,
+    summarize
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+
+Attaching package: ‘reshape2’
+
+The following object is masked from ‘package:tidyr’:
+
+    smiths
+
+Loading required package: nnls
+Super Learner
+Version: 2.0-24
+Package created on 2018-08-10
+
+gdata: read.xls support for 'XLS' (Excel 97-2004) files ENABLED.
+
+gdata: read.xls support for 'XLSX' (Excel 2007+) files ENABLED.
+
+Attaching package: ‘gdata’
+
+The following objects are masked from ‘package:dplyr’:
+
+    combine, first, last
+
+The following object is masked from ‘package:stats’:
+
+    nobs
+
+The following object is masked from ‘package:utils’:
+
+    object.size
+
+The following object is masked from ‘package:base’:
+
+    startsWith
+
+Loading required package: MASS
+
+Attaching package: ‘MASS’
+
+The following object is masked from ‘package:dplyr’:
+
+    select
+
+## 
+##  Matching (Version 4.9-6, Build Date: 2019-04-07)
+##  See http://sekhon.berkeley.edu/matching for additional documentation.
+##  Please cite software as:
+##   Jasjeet S. Sekhon. 2011. ``Multivariate and Propensity Score Matching
+##   Software with Automated Balance Optimization: The Matching package for R.''
+##   Journal of Statistical Software, 42(7): 1-52. 
+##
+
+> 
+> load(vax_results_2017_path)
+> load(vax_results_2018_path)
+> 
+> vx.y1.o.race$yr="2014-15"
+> vx.y2.o.race$yr="2015-16"
+> vx.y3.o.race$yr="2016-17"
+> vx.y4.o.race$yr="2017-18"
+> 
+> vx.y1.w.race$yr="2014-15"
+> vx.y2.w.race$yr="2015-16"
+> vx.y3.w.race$yr="2016-17"
+> vx.y4.w.race$yr="2017-18"
+> 
+> vx.y1.o.race$dist="OUSD"
+> vx.y2.o.race$dist="OUSD"
+> vx.y3.o.race$dist="OUSD"
+> vx.y4.o.race$dist="OUSD"
+> 
+> vx.y1.w.race$dist="WCCUSD"
+> vx.y2.w.race$dist="WCCUSD"
+> vx.y3.w.race$dist="WCCUSD"
+> vx.y4.w.race$dist="WCCUSD"
+> 
+> vx.y1.o.race$race=rownames(vx.y1.o.race)
+> vx.y2.o.race$race=rownames(vx.y2.o.race)
+> vx.y3.o.race$race=rownames(vx.y3.o.race)
+> vx.y4.o.race$race=rownames(vx.y4.o.race)
+> 
+> vx.y1.w.race$race=rownames(vx.y1.w.race)
+> vx.y2.w.race$race=rownames(vx.y2.w.race)
+> vx.y3.w.race$race=rownames(vx.y3.w.race)
+> vx.y4.w.race$race=rownames(vx.y4.w.race)
+> 
+> vx.race=rbind(vx.y1.o.race,vx.y2.o.race,vx.y3.o.race,vx.y4.o.race,
++               vx.y1.w.race,vx.y2.w.race,vx.y3.w.race,vx.y4.w.race)
+> 
+> vx.race$yr=as.factor(vx.race$yr)
+> vx.race$Mean=vx.race$Mean*100
+> vx.race$Mean.f=sprintf("%0.0f",vx.race$Mean)
+> vx.race$lower=vx.race$LowerCI*100
+> vx.race$upper=vx.race$UpperCI*100
+> 
+> # drop group with too few data
+> vx.race$race[vx.race$race=="Missing"]="Race not reported"
+> vx.race$race[vx.race$race=="Multi"]="Multiple races"
+> vx.race$race[vx.race$race=="Asian"]="Asian American"
+> vx.race$race[vx.race$race=="Black"]="African American"
+> vx.race$race[vx.race$race=="Pacific islander"]="Pacific Islander"
+> vx.race$race=factor(vx.race$race, levels = c("African American", "Asian American",
++                                              "Latino", "Native American", "Pacific Islander",
++                                              "White","Multiple races","Race not reported"))
+> 
+> 
+> # manually fixing CI upper bound for native american 
+> vx.race$upper[vx.race$race=="Native American" & vx.race$yr=="2014-15"] = 85
+> vx.race$upper[vx.race$race=="Native American" & vx.race$yr=="2015-16"] = 85
+> 
+> pdf(file=paste0(plot_path,"fig-vxcov-race-time.pdf"),width=12,height=6)
+> ggplot(vx.race,aes(x=yr,y=Mean,group=dist))+
++   geom_linerange(aes(ymin=lower,ymax=upper,col=dist),size=.7,
++                 width=0.15, alpha = 0.7)+
++   geom_line(aes(col=dist), size = 1.5)+
++   ylab("Percent of students vaccinated for influenza")+xlab("")+
++   scale_y_continuous(limits=c(5,85),labels=seq(5,85,10),breaks=seq(5,85,10))+
++   scale_color_manual("",values=c("#2185c5","#ff9715"))+
++   scale_shape_manual("",values=c(16,17))+
++   theme_complete_bw()+
++   theme(strip.text.x = element_text(size = 14)) +
++   facet_wrap(~race, nrow = 2)+
++   theme(legend.position="bottom") 
+Warning: Ignoring unknown parameters: width
+> dev.off()
+null device 
+          1 
+> 
+> 
+> 
+> proc.time()
+   user  system elapsed 
+  1.394   0.140   1.548 

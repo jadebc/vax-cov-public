@@ -1,0 +1,196 @@
+
+R version 3.6.1 (2019-07-05) -- "Action of the Toes"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ########################################
+> # Shoo the Flu evaluation
+> # Analysis of student influenza vaccination coverage 
+> 
+> # Obtain mean / percentage of demographic variables
+> ########################################
+> 
+> # define directories, load libraries
+> source(here::here("0-config.R"))
+here() starts at /Users/jadederong/Documents/CRG/flu/vax-cov-public
+
+Attaching package: ‘plyr’
+
+The following object is masked from ‘package:here’:
+
+    here
+
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:plyr’:
+
+    arrange, count, desc, failwith, id, mutate, rename, summarise,
+    summarize
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+
+Attaching package: ‘reshape2’
+
+The following object is masked from ‘package:tidyr’:
+
+    smiths
+
+Loading required package: nnls
+Super Learner
+Version: 2.0-24
+Package created on 2018-08-10
+
+gdata: read.xls support for 'XLS' (Excel 97-2004) files ENABLED.
+
+gdata: read.xls support for 'XLSX' (Excel 2007+) files ENABLED.
+
+Attaching package: ‘gdata’
+
+The following objects are masked from ‘package:dplyr’:
+
+    combine, first, last
+
+The following object is masked from ‘package:stats’:
+
+    nobs
+
+The following object is masked from ‘package:utils’:
+
+    object.size
+
+The following object is masked from ‘package:base’:
+
+    startsWith
+
+Loading required package: MASS
+
+Attaching package: ‘MASS’
+
+The following object is masked from ‘package:dplyr’:
+
+    select
+
+## 
+##  Matching (Version 4.9-6, Build Date: 2019-04-07)
+##  See http://sekhon.berkeley.edu/matching for additional documentation.
+##  Please cite software as:
+##   Jasjeet S. Sekhon. 2011. ``Multivariate and Propensity Score Matching
+##   Software with Automated Balance Optimization: The Matching package for R.''
+##   Journal of Statistical Software, 42(7): 1-52. 
+##
+
+> 
+> #---------------------------------------------
+> # 2017 survey
+> #---------------------------------------------
+> data17 = read.csv(paste0(data_path_2017))
+> data17$dist=as.factor(data17$dist)
+> 
+> data17$edu=as.character(data17$edu)
+> 
+> data17 = data17 %>% mutate(college = case_when(
++   edu == "Less than high school" ~ "No",
++   edu == "High school" ~ "No", 
++   edu == "Associate/College"~ "Yes",
++   edu == "Postgrad" ~ "Yes",
++   edu == "Missing" ~ "Missing/Error",
++   edu == "Error" ~ "Missing/Error"
++ ))
+> 
+> prop.table(table(data17$grade, data17$district),2)
+   
+           OUSD      WCCUSD
+  0 0.192787177 0.156160084
+  1 0.172751558 0.168192519
+  2 0.178539626 0.151451739
+  3 0.161620659 0.161130003
+  4 0.161175423 0.155113785
+  5 0.132680321 0.119278054
+  6 0.000445236 0.088673816
+> prop.table(table(data17$language, data17$district),2)
+         
+               OUSD    WCCUSD
+  English 0.7484417 0.7424163
+  Spanish 0.2515583 0.2575837
+> prop.table(table(data17$college, data17$district),2)
+               
+                      OUSD     WCCUSD
+  Missing/Error 0.06856634 0.05230126
+  No            0.61398041 0.56485356
+  Yes           0.31745325 0.38284519
+> prop.table(table(data17$race, data17$district),2)
+                  
+                          OUSD      WCCUSD
+  Asian            0.223063224 0.164487448
+  Black            0.163401603 0.097018828
+  Latino           0.407836153 0.512813808
+  Missing          0.026714159 0.023535565
+  Multi            0.081478183 0.108525105
+  Native American  0.004897596 0.004445607
+  Pacific islander 0.012466607 0.012813808
+  White            0.080142476 0.076359833
+> 
+> #---------------------------------------------
+> # 2018 survey
+> #---------------------------------------------
+> data18 = read.csv(paste0(data_path_2018))
+> 
+> data18$edu=as.character(data18$edu)
+> 
+> data18 = data18 %>% mutate(college = case_when(
++   edu == "Less than high school" ~ "No",
++   edu == "High school" ~ "No", 
++   edu == "Associate/College"~ "Yes",
++   edu == "Postgrad" ~ "Yes",
++   edu == "Missing" ~ "Missing/Error",
++   edu == "Error" ~ "Missing/Error"
++ ))
+> 
+> prop.table(table(data18$language, data18$district),2)
+         
+               OUSD    WCCUSD
+  English 0.7765386 0.7329907
+  Spanish 0.2234614 0.2670093
+> prop.table(table(data18$college, data18$district),2)
+               
+                      OUSD     WCCUSD
+  Missing/Error 0.07517555 0.05531082
+  No            0.58157786 0.54674498
+  Yes           0.34324659 0.39794420
+> prop.table(table(data18$race, data18$district),2)
+                  
+                          OUSD      WCCUSD
+  Asian            0.252375052 0.168869310
+  Black            0.164394878 0.098384728
+  Latino           0.358942586 0.502936858
+  Missing          0.026022305 0.022026432
+  Multi            0.100371747 0.111111111
+  Native American  0.007021892 0.005873715
+  Pacific islander 0.013217679 0.011502692
+  White            0.077653862 0.079295154
+> 
+> proc.time()
+   user  system elapsed 
+  0.995   0.191   1.343 
