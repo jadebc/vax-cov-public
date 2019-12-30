@@ -15,7 +15,8 @@ sl_pred_df = readRDS(vax_coverage_participation)
 
 data = data %>% mutate(
   coverage = coverage * 100,
-  participation = participation * 100)
+  participation = participation * 100) %>% 
+  rename(schoolyr = year)
 
 pdf(file=paste0(plot_path,"fig-vxcov-participation.pdf"),width=10,height=3)
 ggplot(sl_pred_df, aes(x = participation, y = pred)) + 

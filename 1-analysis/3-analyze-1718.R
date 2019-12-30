@@ -165,6 +165,10 @@ error.comp.y4.w=as.data.frame(mean_se(Y=data$errorcomp1718[data$dist=="WCCUSD"],
 # vaccine location 
 #-------------------------------------
 # combine error with missing/dk
+data$vxloc1516_18 = as.character(data$vxloc1516_18)
+data$vxloc1617_18 = as.character(data$vxloc1617_18)
+data$vxloc1718 = as.character(data$vxloc1718)
+
 data$vxloc1516_18[data$vxloc1516_18=="Error"]="Error/Missing/Don't know"
 data$vxloc1516_18[data$vxloc1516_18=="Missing/Don't know"]="Error/Missing/Don't know"
 data$vxloc1617_18[data$vxloc1617_18=="Error"]="Error/Missing/Don't know"

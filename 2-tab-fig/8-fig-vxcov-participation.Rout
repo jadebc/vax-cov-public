@@ -17,8 +17,6 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
-[Previously saved workspace restored]
-
 > ########################################
 > # Shoo the Flu evaluation
 > # Analysis of student influenza vaccination coverage 
@@ -111,7 +109,8 @@ The following object is masked from ‘package:dplyr’:
 > 
 > data = data %>% mutate(
 +   coverage = coverage * 100,
-+   participation = participation * 100)
++   participation = participation * 100) %>% 
++   rename(schoolyr = year)
 > 
 > pdf(file=paste0(plot_path,"fig-vxcov-participation.pdf"),width=10,height=3)
 > ggplot(sl_pred_df, aes(x = participation, y = pred)) + 
@@ -127,4 +126,4 @@ null device
 > 
 > proc.time()
    user  system elapsed 
-  1.157   0.145   1.307 
+  1.081   0.132   1.216 

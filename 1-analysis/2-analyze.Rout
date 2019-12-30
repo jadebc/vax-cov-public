@@ -17,8 +17,6 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
-[Previously saved workspace restored]
-
 > ########################################
 > # Shoo the Flu evaluation
 > # Analysis of student influenza vaccination coverage 
@@ -641,30 +639,16 @@ The following objects are masked from ‘package:base’:
 > # vaccine location 
 > #-------------------------------------
 > # combine error with missing/dk
+> data$vxloc1415 = as.character(data$vxloc1415)
+> data$vxloc1516 = as.character(data$vxloc1516)
+> data$vxloc1617 = as.character(data$vxloc1617)
+> 
 > data$vxloc1415[data$vxloc1415=="Error"]="Error/Missing/Don't know"
-Warning message:
-In `[<-.factor`(`*tmp*`, data$vxloc1415 == "Error", value = c(1L,  :
-  invalid factor level, NA generated
 > data$vxloc1415[data$vxloc1415=="Missing/Don't know"]="Error/Missing/Don't know"
-Warning message:
-In `[<-.factor`(`*tmp*`, data$vxloc1415 == "Missing/Don't know",  :
-  invalid factor level, NA generated
 > data$vxloc1516[data$vxloc1516=="Error"]="Error/Missing/Don't know"
-Warning message:
-In `[<-.factor`(`*tmp*`, data$vxloc1516 == "Error", value = c(1L,  :
-  invalid factor level, NA generated
 > data$vxloc1516[data$vxloc1516=="Missing/Don't know"]="Error/Missing/Don't know"
-Warning message:
-In `[<-.factor`(`*tmp*`, data$vxloc1516 == "Missing/Don't know",  :
-  invalid factor level, NA generated
 > data$vxloc1617[data$vxloc1617=="Error"]="Error/Missing/Don't know"
-Warning message:
-In `[<-.factor`(`*tmp*`, data$vxloc1617 == "Error", value = c(1L,  :
-  invalid factor level, NA generated
 > data$vxloc1617[data$vxloc1617=="Missing/Don't know"]="Error/Missing/Don't know"
-Warning message:
-In `[<-.factor`(`*tmp*`, data$vxloc1617 == "Missing/Don't know",  :
-  invalid factor level, NA generated
 > 
 > # create indicators for each vaccine location; denominator
 > # includes missing/error/don't know
@@ -685,275 +669,128 @@ In `[<-.factor`(`*tmp*`, data$vxloc1617 == "Missing/Don't know",  :
 > data$error1617=ifelse(data$vxloc1617=="Error/Missing/Don't know",1,0)
 > 
 > table(data$vxloc1415[data$vx1415==1],data$dist[data$vx1415==1])
-                    
-                     OUSD WCCUSD
-  Doctor/clinic       945   2209
-  Error                 0      0
-  Missing/Don't know    0      0
-  Other                16    110
-  School              306     42
+                          
+                           OUSD WCCUSD
+  Doctor/clinic             945   2209
+  Error/Missing/Don't know   63     90
+  Other                      16    110
+  School                    306     42
 > table(data$vxloc1516[data$vx1516==1],data$dist[data$vx1516==1])
-                    
-                     OUSD WCCUSD
-  Doctor/clinic       926   2314
-  Error                 0      0
-  Missing/Don't know    0      0
-  Other                15    121
-  School              511     18
+                          
+                           OUSD WCCUSD
+  Doctor/clinic             926   2314
+  Error/Missing/Don't know   66     70
+  Other                      15    121
+  School                    511     18
 > table(data$vxloc1617[data$vx1617==1],data$dist[data$vx1617==1])
-                    
-                     OUSD WCCUSD
-  Doctor/clinic       840   1986
-  Error                 0      0
-  Missing/Don't know    0      0
-  Other                12    115
-  School              544     10
+                          
+                           OUSD WCCUSD
+  Doctor/clinic             840   1986
+  Error/Missing/Don't know   41     44
+  Other                      12    115
+  School                    544     10
 > 
 > doc.y1.o=as.data.frame(mean_se(Y=data$doc1415[data$dist=="OUSD" & data$vx1415==1],
 +      id=data$matchid[data$dist=="OUSD" & data$vx1415==1]))
-
------------------------------------------
-Dropping 63 observations
-due to missing values in the outcome
- Final sample size: 1267 
------------------------------------------
         N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 1267 0.7458564 0.4355507 0.02064818   0.7053859   0.7863268
+[1,] 1330 0.7105263 0.4536887 0.01994081   0.6714423   0.7496103
 > sch.y1.o=as.data.frame(mean_se(Y=data$school1415[data$dist=="OUSD" & data$vx1415==1],
 +      id=data$matchid[data$dist=="OUSD" & data$vx1415==1]))
-
------------------------------------------
-Dropping 63 observations
-due to missing values in the outcome
- Final sample size: 1267 
------------------------------------------
-        N      Mean       SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 1267 0.2415154 0.428171 0.02136414   0.1996417   0.2833891
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
+[1,] 1330 0.2300752 0.4210391 0.02067541   0.1895514    0.270599
 > oth.y1.o=as.data.frame(mean_se(Y=data$other1415[data$dist=="OUSD" & data$vx1415==1],
 +      id=data$matchid[data$dist=="OUSD" & data$vx1415==1]))
-
------------------------------------------
-Dropping 63 observations
-due to missing values in the outcome
- Final sample size: 1267 
------------------------------------------
-        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 1267 0.01262826 0.1117078 0.002705959 0.007324576  0.01793194
+        N       Mean       SD   Robust SE Lower 95%CI Upper 95%CI
+[1,] 1330 0.01203008 0.109061 0.002568585 0.006995648   0.0170645
 > errorloc.y1.o=as.data.frame(mean_se(Y=data$error1415[data$dist=="OUSD" & data$vx1415==1],
 +      id=data$matchid[data$dist=="OUSD" & data$vx1415==1]))
-
------------------------------------------
-Dropping 63 observations
-due to missing values in the outcome
- Final sample size: 1267 
------------------------------------------
-        N Mean SD Robust SE Lower 95%CI Upper 95%CI
-[1,] 1267    0  0       NaN         NaN         NaN
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
+[1,] 1330 0.04736842 0.2125055 0.008095772  0.03150071  0.06323613
 > 
 > doc.y2.o=as.data.frame(mean_se(Y=data$doc1516[data$dist=="OUSD" & data$vx1516==1],
 +      id=data$matchid[data$dist=="OUSD" & data$vx1516==1]))
-
------------------------------------------
-Dropping 66 observations
-due to missing values in the outcome
- Final sample size: 1452 
------------------------------------------
-        N     Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 1452 0.637741 0.4808187 0.02016156   0.5982244   0.6772577
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
+[1,] 1518 0.6100132 0.4879077 0.01820787   0.5743258   0.6457006
 > sch.y2.o=as.data.frame(mean_se(Y=data$school1516[data$dist=="OUSD" & data$vx1516==1],
 +      id=data$matchid[data$dist=="OUSD" & data$vx1516==1]))
-
------------------------------------------
-Dropping 66 observations
-due to missing values in the outcome
- Final sample size: 1452 
------------------------------------------
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 1452 0.3519284 0.4777363 0.02048291   0.3117819   0.3920749
+        N      Mean        SD Robust SE Lower 95%CI Upper 95%CI
+[1,] 1518 0.3366271 0.4727119 0.0206878   0.2960791   0.3771752
 > oth.y2.o=as.data.frame(mean_se(Y=data$other1516[data$dist=="OUSD" & data$vx1516==1],
 +      id=data$matchid[data$dist=="OUSD" & data$vx1516==1]))
-
------------------------------------------
-Dropping 66 observations
-due to missing values in the outcome
- Final sample size: 1452 
------------------------------------------
-        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 1452 0.01033058 0.1011479 0.002442195 0.005543876  0.01511728
+        N        Mean         SD   Robust SE Lower 95%CI Upper 95%CI
+[1,] 1518 0.009881423 0.09894559 0.002323775 0.005326824  0.01443602
 > errorloc.y2.o=as.data.frame(mean_se(Y=data$error1516[data$dist=="OUSD" & data$vx1516==1],
 +      id=data$matchid[data$dist=="OUSD" & data$vx1516==1]))
-
------------------------------------------
-Dropping 66 observations
-due to missing values in the outcome
- Final sample size: 1452 
------------------------------------------
-        N Mean SD Robust SE Lower 95%CI Upper 95%CI
-[1,] 1452    0  0       NaN         NaN         NaN
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
+[1,] 1518 0.04347826 0.2039983 0.007519104  0.02874082   0.0582157
 > 
 > doc.y3.o=as.data.frame(mean_se(Y=data$doc1617[data$dist=="OUSD" & data$vx1617==1],
 +      id=data$matchid[data$dist=="OUSD" & data$vx1617==1]))
-
------------------------------------------
-Dropping 41 observations
-due to missing values in the outcome
- Final sample size: 1396 
------------------------------------------
         N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 1396 0.6017192 0.4897193 0.02523198   0.5522645   0.6511739
+[1,] 1437 0.5845511 0.4929708 0.02412812     0.53726   0.6318423
 > sch.y3.o=as.data.frame(mean_se(Y=data$school1617[data$dist=="OUSD" & data$vx1617==1],
 +      id=data$matchid[data$dist=="OUSD" & data$vx1617==1]))
-
------------------------------------------
-Dropping 41 observations
-due to missing values in the outcome
- Final sample size: 1396 
------------------------------------------
         N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 1396 0.3896848 0.4878535 0.02631679   0.3381039   0.4412657
+[1,] 1437 0.3785665 0.4851986 0.02609785   0.3274147   0.4297182
 > oth.y3.o=as.data.frame(mean_se(Y=data$other1617[data$dist=="OUSD" & data$vx1617==1],
 +      id=data$matchid[data$dist=="OUSD" & data$vx1617==1]))
-
------------------------------------------
-Dropping 41 observations
-due to missing values in the outcome
- Final sample size: 1396 
------------------------------------------
         N        Mean         SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 1396 0.008595989 0.09234829 0.003026551 0.002663948  0.01452803
+[1,] 1437 0.008350731 0.09103166 0.002923633 0.002620409  0.01408105
 > errorloc.y3.o=as.data.frame(mean_se(Y=data$error1617[data$dist=="OUSD" & data$vx1617==1],
 +      id=data$matchid[data$dist=="OUSD" & data$vx1617==1]))
-
------------------------------------------
-Dropping 41 observations
-due to missing values in the outcome
- Final sample size: 1396 
------------------------------------------
-        N Mean SD Robust SE Lower 95%CI Upper 95%CI
-[1,] 1396    0  0       NaN         NaN         NaN
+        N       Mean       SD   Robust SE Lower 95%CI Upper 95%CI
+[1,] 1437 0.02853166 0.166544 0.005308946  0.01812613   0.0389372
 > 
 > doc.y1.w=as.data.frame(mean_se(Y=data$doc1415[data$dist=="WCCUSD" & data$vx1415==1],
 +      id=data$matchid[data$dist=="WCCUSD" & data$vx1415==1]))
-
------------------------------------------
-Dropping 90 observations
-due to missing values in the outcome
- Final sample size: 2361 
------------------------------------------
-        N      Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2361 0.9356205 0.2454797 0.005514314   0.9248124   0.9464286
+        N      Mean       SD   Robust SE Lower 95%CI Upper 95%CI
+[1,] 2451 0.9012648 0.298367 0.008362307   0.8848747   0.9176549
 > sch.y1.w=as.data.frame(mean_se(Y=data$school1415[data$dist=="WCCUSD" & data$vx1415==1],
 +      id=data$matchid[data$dist=="WCCUSD" & data$vx1415==1]))
-
------------------------------------------
-Dropping 90 observations
-due to missing values in the outcome
- Final sample size: 2361 
------------------------------------------
-        N       Mean       SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2361 0.01778907 0.132212 0.003121763  0.01167042  0.02390773
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
+[1,] 2451 0.01713586 0.1298041 0.002993845  0.01126793   0.0230038
 > oth.y1.w=as.data.frame(mean_se(Y=data$other1415[data$dist=="WCCUSD" & data$vx1415==1],
 +      id=data$matchid[data$dist=="WCCUSD" & data$vx1415==1]))
-
------------------------------------------
-Dropping 90 observations
-due to missing values in the outcome
- Final sample size: 2361 
------------------------------------------
-        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2361 0.04659043 0.2108046 0.004669585  0.03743804  0.05574281
+        N       Mean       SD   Robust SE Lower 95%CI Upper 95%CI
+[1,] 2451 0.04487964 0.207082 0.004383555  0.03628787  0.05347141
 > errorloc.y1.w=as.data.frame(mean_se(Y=data$error1415[data$dist=="WCCUSD" & data$vx1415==1],
 +      id=data$matchid[data$dist=="WCCUSD" & data$vx1415==1]))
-
------------------------------------------
-Dropping 90 observations
-due to missing values in the outcome
- Final sample size: 2361 
------------------------------------------
-        N Mean SD Robust SE Lower 95%CI Upper 95%CI
-[1,] 2361    0  0       NaN         NaN         NaN
+        N       Mean        SD  Robust SE Lower 95%CI Upper 95%CI
+[1,] 2451 0.03671971 0.1881112 0.00427324  0.02834416  0.04509526
 > 
 > doc.y2.w=as.data.frame(mean_se(Y=data$doc1516[data$dist=="WCCUSD" & data$vx1516==1],
 +      id=data$matchid[data$dist=="WCCUSD" & data$vx1516==1]))
-
------------------------------------------
-Dropping 70 observations
-due to missing values in the outcome
- Final sample size: 2453 
------------------------------------------
         N      Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2453 0.9433347 0.2312491 0.006045666   0.9314852   0.9551842
+[1,] 2523 0.9171621 0.2756917 0.009114194   0.8992983   0.9350259
 > sch.y2.w=as.data.frame(mean_se(Y=data$school1516[data$dist=="WCCUSD" & data$vx1516==1],
 +      id=data$matchid[data$dist=="WCCUSD" & data$vx1516==1]))
-
------------------------------------------
-Dropping 70 observations
-due to missing values in the outcome
- Final sample size: 2453 
------------------------------------------
         N        Mean         SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2453 0.007337954 0.08536439 0.001884953 0.003643446  0.01103246
+[1,] 2523 0.007134364 0.08418001 0.001816677 0.003573678  0.01069505
 > oth.y2.w=as.data.frame(mean_se(Y=data$other1516[data$dist=="WCCUSD" & data$vx1516==1],
 +      id=data$matchid[data$dist=="WCCUSD" & data$vx1516==1]))
-
------------------------------------------
-Dropping 70 observations
-due to missing values in the outcome
- Final sample size: 2453 
------------------------------------------
         N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2453 0.04932735 0.2165948 0.005581909  0.03838681   0.0602679
+[1,] 2523 0.04795878 0.2137214 0.005329137  0.03751367  0.05840389
 > errorloc.y2.w=as.data.frame(mean_se(Y=data$error1516[data$dist=="WCCUSD" & data$vx1516==1],
 +      id=data$matchid[data$dist=="WCCUSD" & data$vx1516==1]))
-
------------------------------------------
-Dropping 70 observations
-due to missing values in the outcome
- Final sample size: 2453 
------------------------------------------
-        N Mean SD Robust SE Lower 95%CI Upper 95%CI
-[1,] 2453    0  0       NaN         NaN         NaN
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
+[1,] 2523 0.02774475 0.1642732 0.004705079  0.01852279   0.0369667
 > 
 > doc.y3.w=as.data.frame(mean_se(Y=data$doc1617[data$dist=="WCCUSD" & data$vx1617==1],
 +      id=data$matchid[data$dist=="WCCUSD" & data$vx1617==1]))
-
------------------------------------------
-Dropping 44 observations
-due to missing values in the outcome
- Final sample size: 2111 
------------------------------------------
-        N      Mean      SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2111 0.9407864 0.23608 0.005425717    0.930152   0.9514208
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
+[1,] 2155 0.9215777 0.2688973 0.00640421   0.9090255     0.93413
 > sch.y3.w=as.data.frame(mean_se(Y=data$school1617[data$dist=="WCCUSD" & data$vx1617==1],
 +      id=data$matchid[data$dist=="WCCUSD" & data$vx1617==1]))
-
------------------------------------------
-Dropping 44 observations
-due to missing values in the outcome
- Final sample size: 2111 
------------------------------------------
         N        Mean         SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2111 0.004737091 0.06867959 0.001490874 0.001814979 0.007659204
+[1,] 2155 0.004640371 0.06797781 0.001459418 0.001779911 0.007500831
 > oth.y3.w=as.data.frame(mean_se(Y=data$other1617[data$dist=="WCCUSD" & data$vx1617==1],
 +      id=data$matchid[data$dist=="WCCUSD" & data$vx1617==1]))
-
------------------------------------------
-Dropping 44 observations
-due to missing values in the outcome
- Final sample size: 2111 
------------------------------------------
-        N       Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2111 0.05447655 0.2270094 0.00527303  0.04414141  0.06481169
+        N       Mean       SD   Robust SE Lower 95%CI Upper 95%CI
+[1,] 2155 0.05336427 0.224811 0.005155436  0.04325961  0.06346892
 > errorloc.y3.w=as.data.frame(mean_se(Y=data$error1617[data$dist=="WCCUSD" & data$vx1617==1],
 +      id=data$matchid[data$dist=="WCCUSD" & data$vx1617==1]))
-
------------------------------------------
-Dropping 44 observations
-due to missing values in the outcome
- Final sample size: 2111 
------------------------------------------
-        N Mean SD Robust SE Lower 95%CI Upper 95%CI
-[1,] 2111    0  0       NaN         NaN         NaN
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
+[1,] 2155 0.02041763 0.1414568 0.003325871  0.01389893  0.02693634
 > 
 > #-------------------------------------
 > # vaccine location, including non vaccinated
@@ -991,6 +828,7 @@ due to missing values in the outcome
                                   
                                    OUSD WCCUSD
   Doctor/clinic                     945   2209
+  Error/Missing/Don't know           63     90
   Not vaccinated/Don't know if vax  916   1373
   Other                              16    110
   School                            306     42
@@ -998,6 +836,7 @@ due to missing values in the outcome
                                   
                                    OUSD WCCUSD
   Doctor/clinic                     926   2314
+  Error/Missing/Don't know           66     70
   Not vaccinated/Don't know if vax  728   1301
   Other                              15    121
   School                            511     18
@@ -1005,315 +844,136 @@ due to missing values in the outcome
                                   
                                    OUSD WCCUSD
   Doctor/clinic                     840   1986
+  Error/Missing/Don't know           41     44
   Not vaccinated/Don't know if vax  809   1669
   Other                              12    115
   School                            544     10
 > 
 > doc.comp.y1.o=as.data.frame(mean_se(Y=data$doccomp1415[data$dist=="OUSD"],
 +      id=data$matchid[data$dist=="OUSD"]))
-
------------------------------------------
-Dropping 63 observations
-due to missing values in the outcome
- Final sample size: 2183 
------------------------------------------
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2183 0.4328905 0.4955894 0.01817336   0.3972707   0.4685103
+        N     Mean        SD Robust SE Lower 95%CI Upper 95%CI
+[1,] 2246 0.420748 0.4937891 0.0183963   0.3846912   0.4568048
 > sch.comp.y1.o=as.data.frame(mean_se(Y=data$schoolcomp1415[data$dist=="OUSD"],
 +      id=data$matchid[data$dist=="OUSD"]))
-
------------------------------------------
-Dropping 63 observations
-due to missing values in the outcome
- Final sample size: 2183 
------------------------------------------
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2183 0.1401741 0.3472471 0.01347987   0.1137535   0.1665946
+        N      Mean       SD  Robust SE Lower 95%CI Upper 95%CI
+[1,] 2246 0.1362422 0.343122 0.01329378   0.1101864    0.162298
 > oth.comp.y1.o=as.data.frame(mean_se(Y=data$othercomp1415[data$dist=="OUSD"],
 +      id=data$matchid[data$dist=="OUSD"]))
-
------------------------------------------
-Dropping 63 observations
-due to missing values in the outcome
- Final sample size: 2183 
------------------------------------------
         N        Mean         SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2183 0.007329363 0.08531693 0.001605957 0.004181688  0.01047704
+[1,] 2246 0.007123776 0.08412002 0.001559482 0.004067191  0.01018036
 > novxloc.comp.y1.o=as.data.frame(mean_se(Y=data$novxcomp1415[data$dist=="OUSD"],
 +      id=data$matchid[data$dist=="OUSD"]))
-
------------------------------------------
-Dropping 63 observations
-due to missing values in the outcome
- Final sample size: 2183 
------------------------------------------
-        N     Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2183 0.419606 0.4936076 0.01936285   0.3816549   0.4575572
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
+[1,] 2246 0.4078362 0.4915419 0.01793349   0.3726865   0.4429858
 > errorloc.comp.y1.o=as.data.frame(mean_se(Y=data$errorcomp1415[data$dist=="OUSD"],
 +      id=data$matchid[data$dist=="OUSD"]))
-
------------------------------------------
-Dropping 63 observations
-due to missing values in the outcome
- Final sample size: 2183 
------------------------------------------
-        N Mean SD Robust SE Lower 95%CI Upper 95%CI
-[1,] 2183    0  0       NaN         NaN         NaN
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
+[1,] 2246 0.02804987 0.1651521 0.004354417  0.01951521  0.03658452
 > 
 > doc.comp.y2.o=as.data.frame(mean_se(Y=data$doccomp1516[data$dist=="OUSD"],
 +      id=data$matchid[data$dist=="OUSD"]))
-
------------------------------------------
-Dropping 66 observations
-due to missing values in the outcome
- Final sample size: 2180 
------------------------------------------
         N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2180 0.4247706 0.4944216 0.01420604   0.3969268   0.4526145
+[1,] 2246 0.4122885 0.4923562 0.01348383   0.3858602   0.4387168
 > sch.comp.y2.o=as.data.frame(mean_se(Y=data$schoolcomp1516[data$dist=="OUSD"],
 +      id=data$matchid[data$dist=="OUSD"]))
-
------------------------------------------
-Dropping 66 observations
-due to missing values in the outcome
- Final sample size: 2180 
------------------------------------------
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2180 0.2344037 0.4237227 0.01521959   0.2045733   0.2642341
+        N      Mean        SD Robust SE Lower 95%CI Upper 95%CI
+[1,] 2246 0.2275156 0.4193215 0.0152326   0.1976597   0.2573715
 > oth.comp.y2.o=as.data.frame(mean_se(Y=data$othercomp1516[data$dist=="OUSD"],
 +      id=data$matchid[data$dist=="OUSD"]))
-
------------------------------------------
-Dropping 66 observations
-due to missing values in the outcome
- Final sample size: 2180 
------------------------------------------
-        N        Mean         SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2180 0.006880734 0.08268328 0.001630751 0.003684462  0.01007701
+        N       Mean         SD   Robust SE Lower 95%CI Upper 95%CI
+[1,] 2246 0.00667854 0.08146712 0.001577537 0.003586568 0.009770511
 > novxloc.comp.y2.o=as.data.frame(mean_se(Y=data$novxcomp1516[data$dist=="OUSD"],
 +      id=data$matchid[data$dist=="OUSD"]))
-
------------------------------------------
-Dropping 66 observations
-due to missing values in the outcome
- Final sample size: 2180 
------------------------------------------
-        N     Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2180 0.333945 0.4717285 0.01281798   0.3088217   0.3590682
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
+[1,] 2246 0.3241318 0.4681538 0.01228592   0.3000514   0.3482122
 > errorloc.comp.y2.o=as.data.frame(mean_se(Y=data$errorcomp1516[data$dist=="OUSD"],
 +      id=data$matchid[data$dist=="OUSD"]))
-
------------------------------------------
-Dropping 66 observations
-due to missing values in the outcome
- Final sample size: 2180 
------------------------------------------
-        N Mean SD Robust SE Lower 95%CI Upper 95%CI
-[1,] 2180    0  0       NaN         NaN         NaN
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
+[1,] 2246 0.02938557 0.1689224 0.005040758  0.01950569  0.03926546
 > 
 > doc.comp.y3.o=as.data.frame(mean_se(Y=data$doccomp1617[data$dist=="OUSD"],
 +      id=data$matchid[data$dist=="OUSD"]))
-
------------------------------------------
-Dropping 41 observations
-due to missing values in the outcome
- Final sample size: 2205 
------------------------------------------
         N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2205 0.3809524 0.4857311 0.01281007   0.3558447   0.4060601
+[1,] 2246 0.3739982 0.4839709 0.01224917   0.3499899   0.3980066
 > sch.comp.y3.o=as.data.frame(mean_se(Y=data$schoolcomp1617[data$dist=="OUSD"],
 +      id=data$matchid[data$dist=="OUSD"]))
-
------------------------------------------
-Dropping 41 observations
-due to missing values in the outcome
- Final sample size: 2205 
------------------------------------------
-        N     Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2205 0.246712 0.4311955 0.02038171   0.2067639   0.2866602
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
+[1,] 2246 0.2422084 0.4285151 0.02007817   0.2028552   0.2815616
 > oth.comp.y3.o=as.data.frame(mean_se(Y=data$othercomp1617[data$dist=="OUSD"],
 +      id=data$matchid[data$dist=="OUSD"]))
-
------------------------------------------
-Dropping 41 observations
-due to missing values in the outcome
- Final sample size: 2205 
------------------------------------------
-        N        Mean         SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2205 0.005442177 0.07358679 0.001914151 0.001690441 0.009193913
+        N        Mean         SD Robust SE Lower 95%CI Upper 95%CI
+[1,] 2246 0.005342832 0.07291538 0.0018722  0.00167332 0.009012344
 > novxloc.comp.y3.o=as.data.frame(mean_se(Y=data$novxcomp1617[data$dist=="OUSD"],
 +      id=data$matchid[data$dist=="OUSD"]))
-
------------------------------------------
-Dropping 41 observations
-due to missing values in the outcome
- Final sample size: 2205 
------------------------------------------
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2205 0.3668934 0.4820664 0.01419137   0.3390783   0.3947085
+        N      Mean       SD  Robust SE Lower 95%CI Upper 95%CI
+[1,] 2246 0.3601959 0.480164 0.01428712   0.3321932   0.3881987
 > errorloc.comp.y3.o=as.data.frame(mean_se(Y=data$errorcomp1617[data$dist=="OUSD"],
 +      id=data$matchid[data$dist=="OUSD"]))
-
------------------------------------------
-Dropping 41 observations
-due to missing values in the outcome
- Final sample size: 2205 
------------------------------------------
-        N Mean SD Robust SE Lower 95%CI Upper 95%CI
-[1,] 2205    0  0       NaN         NaN         NaN
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
+[1,] 2246 0.01825467 0.1339008 0.003504064  0.01138671  0.02512264
 > 
 > doc.comp.y1.w=as.data.frame(mean_se(Y=data$doccomp1415[data$dist=="WCCUSD"],
 +      id=data$matchid[data$dist=="WCCUSD"]))
-
------------------------------------------
-Dropping 90 observations
-due to missing values in the outcome
- Final sample size: 3734 
------------------------------------------
         N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 3734 0.5915908 0.4916054 0.01529679   0.5616091   0.6215725
+[1,] 3824 0.5776674 0.4939955 0.01545204   0.5473814   0.6079534
 > sch.comp.y1.w=as.data.frame(mean_se(Y=data$schoolcomp1415[data$dist=="WCCUSD"],
 +      id=data$matchid[data$dist=="WCCUSD"]))
-
------------------------------------------
-Dropping 90 observations
-due to missing values in the outcome
- Final sample size: 3734 
------------------------------------------
         N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 3734 0.01124799 0.1054725 0.001950871 0.007424285   0.0150717
+[1,] 3824 0.01098326 0.1042376 0.001900888 0.007257523    0.014709
 > oth.comp.y1.w=as.data.frame(mean_se(Y=data$othercomp1415[data$dist=="WCCUSD"],
 +      id=data$matchid[data$dist=="WCCUSD"]))
-
------------------------------------------
-Dropping 90 observations
-due to missing values in the outcome
- Final sample size: 3734 
------------------------------------------
         N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 3734 0.02945903 0.1691119 0.002669866  0.02422609  0.03469196
+[1,] 3824 0.02876569 0.1671692 0.002566764  0.02373483  0.03379655
 > novxloc.comp.y1.w=as.data.frame(mean_se(Y=data$novxcomp1415[data$dist=="WCCUSD"],
 +      id=data$matchid[data$dist=="WCCUSD"]))
-
------------------------------------------
-Dropping 90 observations
-due to missing values in the outcome
- Final sample size: 3734 
------------------------------------------
         N      Mean        SD Robust SE Lower 95%CI Upper 95%CI
-[1,] 3734 0.3677022 0.4822443 0.0140679   0.3401291   0.3952753
+[1,] 3824 0.3590481 0.4797841 0.0135877   0.3324162     0.38568
 > errorloc.comp.y1.w=as.data.frame(mean_se(Y=data$errorcomp1415[data$dist=="WCCUSD"],
 +      id=data$matchid[data$dist=="WCCUSD"]))
-
------------------------------------------
-Dropping 90 observations
-due to missing values in the outcome
- Final sample size: 3734 
------------------------------------------
-        N Mean SD Robust SE Lower 95%CI Upper 95%CI
-[1,] 3734    0  0       NaN         NaN         NaN
+        N       Mean        SD  Robust SE Lower 95%CI Upper 95%CI
+[1,] 3824 0.02353556 0.1516168 0.00263433  0.01837228  0.02869885
 > 
 > doc.comp.y2.w=as.data.frame(mean_se(Y=data$doccomp1516[data$dist=="WCCUSD"],
 +      id=data$matchid[data$dist=="WCCUSD"]))
-
------------------------------------------
-Dropping 70 observations
-due to missing values in the outcome
- Final sample size: 3754 
------------------------------------------
         N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 3754 0.6164092 0.4863249 0.01154772   0.5937756   0.6390427
+[1,] 3824 0.6051255 0.4888876 0.01211088   0.5813882   0.6288629
 > sch.comp.y2.w=as.data.frame(mean_se(Y=data$schoolcomp1516[data$dist=="WCCUSD"],
 +      id=data$matchid[data$dist=="WCCUSD"]))
-
------------------------------------------
-Dropping 70 observations
-due to missing values in the outcome
- Final sample size: 3754 
------------------------------------------
-        N        Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 3754 0.004794885 0.0690881 0.001240531 0.002363444 0.007226327
+        N        Mean         SD   Robust SE Lower 95%CI Upper 95%CI
+[1,] 3824 0.004707113 0.06845569 0.001210926 0.002333699 0.007080527
 > oth.comp.y2.w=as.data.frame(mean_se(Y=data$othercomp1516[data$dist=="WCCUSD"],
 +      id=data$matchid[data$dist=="WCCUSD"]))
-
------------------------------------------
-Dropping 70 observations
-due to missing values in the outcome
- Final sample size: 3754 
------------------------------------------
-        N       Mean      SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 3754 0.03223229 0.17664 0.003598206   0.0251798  0.03928477
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
+[1,] 3824 0.03164226 0.1750687 0.003492635   0.0247967  0.03848782
 > novxloc.comp.y2.w=as.data.frame(mean_se(Y=data$novxcomp1516[data$dist=="WCCUSD"],
 +      id=data$matchid[data$dist=="WCCUSD"]))
-
------------------------------------------
-Dropping 70 observations
-due to missing values in the outcome
- Final sample size: 3754 
------------------------------------------
         N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 3754 0.3465637 0.4759387 0.01098014   0.3250426   0.3680847
+[1,] 3824 0.3402197 0.4738449 0.01065148   0.3193428   0.3610966
 > errorloc.comp.y2.w=as.data.frame(mean_se(Y=data$errorcomp1516[data$dist=="WCCUSD"],
 +      id=data$matchid[data$dist=="WCCUSD"]))
-
------------------------------------------
-Dropping 70 observations
-due to missing values in the outcome
- Final sample size: 3754 
------------------------------------------
-        N Mean SD Robust SE Lower 95%CI Upper 95%CI
-[1,] 3754    0  0       NaN         NaN         NaN
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
+[1,] 3824 0.01830544 0.1340711 0.003069367  0.01228948   0.0243214
 > 
 > doc.comp.y3.w=as.data.frame(mean_se(Y=data$doccomp1617[data$dist=="WCCUSD"],
 +      id=data$matchid[data$dist=="WCCUSD"]))
-
------------------------------------------
-Dropping 44 observations
-due to missing values in the outcome
- Final sample size: 3780 
------------------------------------------
         N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 3780 0.5253968 0.4994207 0.01377985   0.4983883   0.5524053
+[1,] 3824 0.5193515 0.4996907 0.01402011   0.4918721   0.5468309
 > sch.comp.y3.w=as.data.frame(mean_se(Y=data$schoolcomp1617[data$dist=="WCCUSD"],
 +      id=data$matchid[data$dist=="WCCUSD"]))
-
------------------------------------------
-Dropping 44 observations
-due to missing values in the outcome
- Final sample size: 3780 
------------------------------------------
         N        Mean         SD    Robust SE Lower 95%CI Upper 95%CI
-[1,] 3780 0.002645503 0.05137317 0.0008212223 0.001035907 0.004255098
+[1,] 3824 0.002615063 0.05107746 0.0008117447 0.001024043 0.004206082
 > oth.comp.y3.w=as.data.frame(mean_se(Y=data$othercomp1617[data$dist=="WCCUSD"],
 +      id=data$matchid[data$dist=="WCCUSD"]))
-
------------------------------------------
-Dropping 44 observations
-due to missing values in the outcome
- Final sample size: 3780 
------------------------------------------
-        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 3780 0.03042328 0.1717717 0.002733473  0.02506567  0.03578089
+        N       Mean        SD Robust SE Lower 95%CI Upper 95%CI
+[1,] 3824 0.03007322 0.1708112 0.0027078  0.02476593  0.03538051
 > novxloc.comp.y3.w=as.data.frame(mean_se(Y=data$novxcomp1617[data$dist=="WCCUSD"],
 +      id=data$matchid[data$dist=="WCCUSD"]))
-
------------------------------------------
-Dropping 44 observations
-due to missing values in the outcome
- Final sample size: 3780 
------------------------------------------
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 3780 0.4415344 0.4966357 0.01288703   0.4162758    0.466793
+        N     Mean        SD  Robust SE Lower 95%CI Upper 95%CI
+[1,] 3824 0.436454 0.4960103 0.01240686   0.4121365   0.4607714
 > errorloc.comp.y3.w=as.data.frame(mean_se(Y=data$errorcomp1617[data$dist=="WCCUSD"],
 +      id=data$matchid[data$dist=="WCCUSD"]))
-
------------------------------------------
-Dropping 44 observations
-due to missing values in the outcome
- Final sample size: 3780 
------------------------------------------
-        N Mean SD Robust SE Lower 95%CI Upper 95%CI
-[1,] 3780    0  0       NaN         NaN         NaN
+        N       Mean        SD  Robust SE Lower 95%CI Upper 95%CI
+[1,] 3824 0.01150628 0.1066623 0.00175804 0.008060517  0.01495203
 > 
 > # future vaccination
 > table(data$vxplan,data$dist)
@@ -1342,4 +1002,4 @@ due to missing values in the outcome
 > 
 > proc.time()
    user  system elapsed 
-  1.770   0.218   2.013 
+  1.786   0.295   2.314 
