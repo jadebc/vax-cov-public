@@ -58,8 +58,10 @@ tab = data.frame(
   diff = pt.est.ci.f(diff_res, decimals = 0, scale = 100)
 )
 
-tab = tab %>% mutate(yr=c("2014-15","2015-16","2016-17","2017-18")) %>%
-  dplyr::select(yr, ousd, wcc, diff)
+tab = tab %>% 
+  mutate(yr=c("2014-15","2015-16","2016-17","2017-18")) %>%
+  dplyr::select(yr, ousd, wcc, diff) %>%
+  mutate(pval = sprintf("%0.03f",diff_res$pval))
 
 write.csv(tab, file = paste0(tab_path, "vaxcov_diff.csv"))
 

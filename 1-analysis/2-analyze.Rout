@@ -17,6 +17,8 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
+[Previously saved workspace restored]
+
 > ########################################
 > # Shoo the Flu evaluation
 > # Analysis of student influenza vaccination coverage 
@@ -130,12 +132,12 @@ The following objects are masked from ‘package:base’:
 
     as.Date, as.Date.numeric
 
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2246 0.5921638 0.4915419 0.01793349   0.5570142   0.6273135
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246 0.5921638 0.4915419 0.01793349   0.5570142   0.6273135      0
 > vx.y1.w=as.data.frame(mean_se(Y=data$vx1415yn[data$dist=="WCCUSD"],
 +         id=data$matchid[data$dist=="WCCUSD"]))
-        N      Mean        SD Robust SE Lower 95%CI Upper 95%CI
-[1,] 3824 0.6409519 0.4797841 0.0135877     0.61432   0.6675838
+        N      Mean        SD Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 3824 0.6409519 0.4797841 0.0135877     0.61432   0.6675838      0
 > 
 > table(data$vx1516,data$dist)
    
@@ -146,12 +148,12 @@ The following objects are masked from ‘package:base’:
   9  226    334
 > vx.y2.o=as.data.frame(mean_se(Y=data$vx1516yn[data$dist=="OUSD"],
 +         id=data$matchid[data$dist=="OUSD"]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2246 0.6758682 0.4681538 0.01228592   0.6517878   0.6999486
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246 0.6758682 0.4681538 0.01228592   0.6517878   0.6999486      0
 > vx.y2.w=as.data.frame(mean_se(Y=data$vx1516yn[data$dist=="WCCUSD"],
 +         id=data$matchid[data$dist=="WCCUSD"]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 3824 0.6597803 0.4738449 0.01065148   0.6389034   0.6806572
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 3824 0.6597803 0.4738449 0.01065148   0.6389034   0.6806572      0
 > 
 > table(data$vx1617,data$dist)
    
@@ -162,12 +164,12 @@ The following objects are masked from ‘package:base’:
   9  120    147
 > vx.y3.o=as.data.frame(mean_se(Y=data$vx1617yn[data$dist=="OUSD"],
 +         id=data$matchid[data$dist=="OUSD"]))
-        N      Mean       SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2246 0.6398041 0.480164 0.01428712   0.6118013   0.6678068
+        N      Mean       SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246 0.6398041 0.480164 0.01428712   0.6118013   0.6678068      0
 > vx.y3.w=as.data.frame(mean_se(Y=data$vx1617yn[data$dist=="WCCUSD"],
 +         id=data$matchid[data$dist=="WCCUSD"]))
-        N     Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 3824 0.563546 0.4960103 0.01240686   0.5392286   0.5878635
+        N     Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 3824 0.563546 0.4960103 0.01240686   0.5392286   0.5878635      0
 > 
 > # vax cov by race #-------------------------------------
 > table(data$vx1415,data$dist,data$race,useNA="ifany")
@@ -410,81 +412,81 @@ The following objects are masked from ‘package:base’:
 > 
 > shot.y1.o=as.data.frame(mean_se(Y=data$shot1415[data$dist=="OUSD" & data$vx1415==1],
 +        id=data$matchid[data$dist=="OUSD" & data$vx1415==1]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 1330 0.6037594 0.4892995 0.02423311   0.5562625   0.6512563
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 1330 0.6037594 0.4892995 0.02423311   0.5562625   0.6512563      0
 > spray.y1.o=as.data.frame(mean_se(Y=data$spray1415[data$dist=="OUSD" & data$vx1415==1],
 +        id=data$matchid[data$dist=="OUSD" & data$vx1415==1]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 1330 0.3135338 0.4641038 0.02901956   0.2566555   0.3704122
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 1330 0.3135338 0.4641038 0.02901956   0.2566555   0.3704122      0
 > error.y1.o=as.data.frame(mean_se(Y=data$error1415[data$dist=="OUSD" & data$vx1415==1],
 +        id=data$matchid[data$dist=="OUSD" & data$vx1415==1]))
-        N       Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 1330 0.08270677 0.2755421 0.01053523  0.06205771   0.1033558
+        N       Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 1330 0.08270677 0.2755421 0.01053523  0.06205771   0.1033558      0
 > 
 > shot.y1.w=as.data.frame(mean_se(Y=data$shot1415[data$dist=="WCCUSD" & data$vx1415==1],
 +        id=data$matchid[data$dist=="WCCUSD" & data$vx1415==1]))
-        N    Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2451 0.75561 0.4298127 0.01545823   0.7253118   0.7859081
+        N    Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2451 0.75561 0.4298127 0.01545823   0.7253118   0.7859081      0
 > spray.y1.w=as.data.frame(mean_se(Y=data$spray1415[data$dist=="WCCUSD" & data$vx1415==1],
 +        id=data$matchid[data$dist=="WCCUSD" & data$vx1415==1]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2451 0.1942064 0.3956693 0.01493241   0.1649389    0.223474
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2451 0.1942064 0.3956693 0.01493241   0.1649389    0.223474      0
 > error.y1.w=as.data.frame(mean_se(Y=data$error1415[data$dist=="WCCUSD" & data$vx1415==1],
 +        id=data$matchid[data$dist=="WCCUSD" & data$vx1415==1]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2451 0.0501836 0.2183682 0.00483042  0.04071598  0.05965122
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2451 0.0501836 0.2183682 0.00483042  0.04071598  0.05965122      0
 > 
 > shot.y2.o=as.data.frame(mean_se(Y=data$shot1516[data$dist=="OUSD" & data$vx1516==1],
 +        id=data$matchid[data$dist=="OUSD" & data$vx1516==1]))
-        N      Mean       SD Robust SE Lower 95%CI Upper 95%CI
-[1,] 1518 0.5790514 0.493874 0.0246685   0.5307011   0.6274016
+        N      Mean       SD Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 1518 0.5790514 0.493874 0.0246685   0.5307011   0.6274016      0
 > spray.y2.o=as.data.frame(mean_se(Y=data$spray1516[data$dist=="OUSD" & data$vx1516==1],
 +        id=data$matchid[data$dist=="OUSD" & data$vx1516==1]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 1518 0.3333333 0.4715599 0.02931526   0.2758754   0.3907912
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 1518 0.3333333 0.4715599 0.02931526   0.2758754   0.3907912      0
 > error.y2.o=as.data.frame(mean_se(Y=data$error1516[data$dist=="OUSD" & data$vx1516==1],
 +        id=data$matchid[data$dist=="OUSD" & data$vx1516==1]))
-        N       Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 1518 0.08761528 0.2828278 0.01110269  0.06585402   0.1093765
+        N       Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 1518 0.08761528 0.2828278 0.01110269  0.06585402   0.1093765      0
 > 
 > shot.y2.w=as.data.frame(mean_se(Y=data$shot1516[data$dist=="WCCUSD" & data$vx1516==1],
 +        id=data$matchid[data$dist=="WCCUSD" & data$vx1516==1]))
-        N     Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2523 0.791518 0.4063037 0.01140381   0.7691666   0.8138695
+        N     Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2523 0.791518 0.4063037 0.01140381   0.7691666   0.8138695      0
 > spray.y2.w=as.data.frame(mean_se(Y=data$spray1516[data$dist=="WCCUSD" & data$vx1516==1],
 +        id=data$matchid[data$dist=="WCCUSD" & data$vx1516==1]))
-        N     Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2523 0.175981 0.3808795 0.01157429   0.1532954   0.1986666
+        N     Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2523 0.175981 0.3808795 0.01157429   0.1532954   0.1986666      0
 > error.y2.w=as.data.frame(mean_se(Y=data$error1516[data$dist=="WCCUSD" & data$vx1516==1],
 +        id=data$matchid[data$dist=="WCCUSD" & data$vx1516==1]))
-        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2523 0.03250099 0.1773616 0.003767997  0.02511572  0.03988626
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2523 0.03250099 0.1773616 0.003767997  0.02511572  0.03988626      0
 > 
 > shot.y3.o=as.data.frame(mean_se(Y=data$shot1617[data$dist=="OUSD" & data$vx1617==1],
 +        id=data$matchid[data$dist=="OUSD" & data$vx1617==1]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 1437 0.8190675 0.3850963 0.01818973   0.7834156   0.8547194
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 1437 0.8190675 0.3850963 0.01818973   0.7834156   0.8547194      0
 > spray.y3.o=as.data.frame(mean_se(Y=data$spray1617[data$dist=="OUSD" & data$vx1617==1],
 +        id=data$matchid[data$dist=="OUSD" & data$vx1617==1]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 1437 0.1043841 0.3058647 0.01194487  0.08097219   0.1277961
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 1437 0.1043841 0.3058647 0.01194487  0.08097219   0.1277961      0
 > error.y3.o=as.data.frame(mean_se(Y=data$error1617[data$dist=="OUSD" & data$vx1617==1],
 +        id=data$matchid[data$dist=="OUSD" & data$vx1617==1]))
-        N       Mean       SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 1437 0.07654836 0.265966 0.009357592  0.05820748  0.09488925
+        N       Mean       SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 1437 0.07654836 0.265966 0.009357592  0.05820748  0.09488925      0
 > 
 > shot.y3.w=as.data.frame(mean_se(Y=data$shot1617[data$dist=="WCCUSD" & data$vx1617==1],
 +        id=data$matchid[data$dist=="WCCUSD" & data$vx1617==1]))
-        N      Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2155 0.9136891 0.2808878 0.008314981   0.8973917   0.9299865
+        N      Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2155 0.9136891 0.2808878 0.008314981   0.8973917   0.9299865      0
 > spray.y3.w=as.data.frame(mean_se(Y=data$spray1617[data$dist=="WCCUSD" & data$vx1617==1],
 +        id=data$matchid[data$dist=="WCCUSD" & data$vx1617==1]))
-        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2155 0.05429234 0.2266462 0.006068082   0.0423989  0.06618578
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2155 0.05429234 0.2266462 0.006068082   0.0423989  0.06618578      0
 > error.y3.w=as.data.frame(mean_se(Y=data$error1617[data$dist=="WCCUSD" & data$vx1617==1],
 +        id=data$matchid[data$dist=="WCCUSD" & data$vx1617==1]))
-        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2155 0.03201856 0.1760902 0.004218008  0.02375127  0.04028586
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2155 0.03201856 0.1760902 0.004218008  0.02375127  0.04028586      0
 > 
 > #-------------------------------------
 > # vaccine type, including non vaccinated
@@ -535,105 +537,105 @@ The following objects are masked from ‘package:base’:
 > 
 > shot.comp.y1.o=as.data.frame(mean_se(Y=data$shotcomp1415[data$dist=="OUSD"],
 +        id=data$matchid[data$dist=="OUSD"]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2246 0.3575245 0.4793778 0.01430341   0.3294898   0.3855592
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246 0.3575245 0.4793778 0.01430341   0.3294898   0.3855592      0
 > spray.comp.y1.o=as.data.frame(mean_se(Y=data$spraycomp1415[data$dist=="OUSD"],
 +        id=data$matchid[data$dist=="OUSD"]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2246 0.1856634 0.3889214 0.02052745   0.1454296   0.2258972
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246 0.1856634 0.3889214 0.02052745   0.1454296   0.2258972      0
 > novx.comp.y1.o=as.data.frame(mean_se(Y=data$novxcomp1415[data$dist=="OUSD"],
 +        id=data$matchid[data$dist=="OUSD"]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2246 0.4078362 0.4915419 0.01793349   0.3726865   0.4429858
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246 0.4078362 0.4915419 0.01793349   0.3726865   0.4429858      0
 > error.comp.y1.o=as.data.frame(mean_se(Y=data$errorcomp1415[data$dist=="OUSD"],
 +        id=data$matchid[data$dist=="OUSD"]))
-        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2246 0.04897596 0.2158658 0.005696044  0.03781171   0.0601402
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246 0.04897596 0.2158658 0.005696044  0.03781171   0.0601402      0
 > 
 > shot.comp.y1.w=as.data.frame(mean_se(Y=data$shotcomp1415[data$dist=="WCCUSD"],
 +        id=data$matchid[data$dist=="WCCUSD"]))
-        N      Mean        SD Robust SE Lower 95%CI Upper 95%CI
-[1,] 3824 0.4843096 0.4998191 0.0120946   0.4606042    0.508015
+        N      Mean        SD Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 3824 0.4843096 0.4998191 0.0120946   0.4606042    0.508015      0
 > spray.comp.y1.w=as.data.frame(mean_se(Y=data$spraycomp1415[data$dist=="WCCUSD"],
 +        id=data$matchid[data$dist=="WCCUSD"]))
-        N     Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 3824 0.124477 0.3301681 0.01080171   0.1033056   0.1456483
+        N     Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 3824 0.124477 0.3301681 0.01080171   0.1033056   0.1456483      0
 > novx.comp.y1.w=as.data.frame(mean_se(Y=data$novxcomp1415[data$dist=="WCCUSD"],
 +        id=data$matchid[data$dist=="WCCUSD"]))
-        N      Mean        SD Robust SE Lower 95%CI Upper 95%CI
-[1,] 3824 0.3590481 0.4797841 0.0135877   0.3324162     0.38568
+        N      Mean        SD Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 3824 0.3590481 0.4797841 0.0135877   0.3324162     0.38568      0
 > error.comp.y1.w=as.data.frame(mean_se(Y=data$errorcomp1415[data$dist=="WCCUSD"],
 +        id=data$matchid[data$dist=="WCCUSD"]))
-        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 3824 0.03216527 0.1764619 0.003029254  0.02622793  0.03810261
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 3824 0.03216527 0.1764619 0.003029254  0.02622793  0.03810261      0
 > 
 > shot.comp.y2.o=as.data.frame(mean_se(Y=data$shotcomp1516[data$dist=="OUSD"],
 +        id=data$matchid[data$dist=="OUSD"]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2246 0.3913624 0.4881639 0.01855394   0.3549967   0.4277281
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246 0.3913624 0.4881639 0.01855394   0.3549967   0.4277281      0
 > spray.comp.y2.o=as.data.frame(mean_se(Y=data$spraycomp1516[data$dist=="OUSD"],
 +        id=data$matchid[data$dist=="OUSD"]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2246 0.2252894 0.4178658 0.02033889   0.1854252   0.2651536
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246 0.2252894 0.4178658 0.02033889   0.1854252   0.2651536      0
 > novx.comp.y2.o=as.data.frame(mean_se(Y=data$novxcomp1516[data$dist=="OUSD"],
 +        id=data$matchid[data$dist=="OUSD"]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2246 0.3241318 0.4681538 0.01228592   0.3000514   0.3482122
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246 0.3241318 0.4681538 0.01228592   0.3000514   0.3482122      0
 > error.comp.y2.o=as.data.frame(mean_se(Y=data$errorcomp1516[data$dist=="OUSD"],
 +        id=data$matchid[data$dist=="OUSD"]))
-        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2246 0.05921638 0.2360818 0.007345704   0.0448188  0.07361396
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246 0.05921638 0.2360818 0.007345704   0.0448188  0.07361396      0
 > 
 > shot.comp.y2.w=as.data.frame(mean_se(Y=data$shotcomp1516[data$dist=="WCCUSD"],
 +        id=data$matchid[data$dist=="WCCUSD"]))
-        N     Mean       SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 3824 0.522228 0.499571 0.007582261   0.5073668   0.5370893
+        N     Mean       SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 3824 0.522228 0.499571 0.007582261   0.5073668   0.5370893      0
 > spray.comp.y2.w=as.data.frame(mean_se(Y=data$spraycomp1516[data$dist=="WCCUSD"],
 +        id=data$matchid[data$dist=="WCCUSD"]))
-        N      Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 3824 0.1161088 0.3203972 0.008752841  0.09895322   0.1332644
+        N      Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 3824 0.1161088 0.3203972 0.008752841  0.09895322   0.1332644      0
 > novx.comp.y2.w=as.data.frame(mean_se(Y=data$novxcomp1516[data$dist=="WCCUSD"],
 +        id=data$matchid[data$dist=="WCCUSD"]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 3824 0.3402197 0.4738449 0.01065148   0.3193428   0.3610966
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 3824 0.3402197 0.4738449 0.01065148   0.3193428   0.3610966      0
 > error.comp.y2.w=as.data.frame(mean_se(Y=data$errorcomp1516[data$dist=="WCCUSD"],
 +        id=data$matchid[data$dist=="WCCUSD"]))
-        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 3824 0.02144351 0.1448764 0.002540205  0.01646471  0.02642232
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 3824 0.02144351 0.1448764 0.002540205  0.01646471  0.02642232      0
 > 
 > shot.comp.y3.o=as.data.frame(mean_se(Y=data$shotcomp1617[data$dist=="OUSD"],
 +        id=data$matchid[data$dist=="OUSD"]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2246 0.5240427 0.4995328 0.01651482   0.4916737   0.5564118
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246 0.5240427 0.4995328 0.01651482   0.4916737   0.5564118      0
 > spray.comp.y3.o=as.data.frame(mean_se(Y=data$spraycomp1617[data$dist=="OUSD"],
 +        id=data$matchid[data$dist=="OUSD"]))
-        N      Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2246 0.0667854 0.2497056 0.007539572  0.05200784  0.08156296
+        N      Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246 0.0667854 0.2497056 0.007539572  0.05200784  0.08156296      0
 > novx.comp.y3.o=as.data.frame(mean_se(Y=data$novxcomp1617[data$dist=="OUSD"],
 +        id=data$matchid[data$dist=="OUSD"]))
-        N      Mean       SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2246 0.3601959 0.480164 0.01428712   0.3321932   0.3881987
+        N      Mean       SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246 0.3601959 0.480164 0.01428712   0.3321932   0.3881987      0
 > error.comp.y3.o=as.data.frame(mean_se(Y=data$errorcomp1617[data$dist=="OUSD"],
 +        id=data$matchid[data$dist=="OUSD"]))
-        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2246 0.04897596 0.2158658 0.006307338  0.03661358  0.06133834
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246 0.04897596 0.2158658 0.006307338  0.03661358  0.06133834      0
 > 
 > shot.comp.y3.w=as.data.frame(mean_se(Y=data$shotcomp1617[data$dist=="WCCUSD"],
 +        id=data$matchid[data$dist=="WCCUSD"]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 3824 0.5149059 0.4998431 0.01468672   0.4861199   0.5436918
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 3824 0.5149059 0.4998431 0.01468672   0.4861199   0.5436918      0
 > spray.comp.y3.w=as.data.frame(mean_se(Y=data$spraycomp1617[data$dist=="WCCUSD"],
 +        id=data$matchid[data$dist=="WCCUSD"]))
-        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 3824 0.03059623 0.1722436 0.003145689  0.02443068  0.03676178
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 3824 0.03059623 0.1722436 0.003145689  0.02443068  0.03676178      0
 > novx.comp.y3.w=as.data.frame(mean_se(Y=data$novxcomp1617[data$dist=="WCCUSD"],
 +        id=data$matchid[data$dist=="WCCUSD"]))
-        N     Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 3824 0.436454 0.4960103 0.01240686   0.4121365   0.4607714
+        N     Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 3824 0.436454 0.4960103 0.01240686   0.4121365   0.4607714      0
 > error.comp.y3.w=as.data.frame(mean_se(Y=data$errorcomp1617[data$dist=="WCCUSD"],
 +        id=data$matchid[data$dist=="WCCUSD"]))
-        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 3824 0.01804393 0.1331277 0.002202344  0.01372734  0.02236053
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 3824 0.01804393 0.1331277 0.002202344  0.01372734  0.02236053      0
 > 
 > #-------------------------------------
 > # vaccine location 
@@ -692,105 +694,105 @@ The following objects are masked from ‘package:base’:
 > 
 > doc.y1.o=as.data.frame(mean_se(Y=data$doc1415[data$dist=="OUSD" & data$vx1415==1],
 +      id=data$matchid[data$dist=="OUSD" & data$vx1415==1]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 1330 0.7105263 0.4536887 0.01994081   0.6714423   0.7496103
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 1330 0.7105263 0.4536887 0.01994081   0.6714423   0.7496103      0
 > sch.y1.o=as.data.frame(mean_se(Y=data$school1415[data$dist=="OUSD" & data$vx1415==1],
 +      id=data$matchid[data$dist=="OUSD" & data$vx1415==1]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 1330 0.2300752 0.4210391 0.02067541   0.1895514    0.270599
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 1330 0.2300752 0.4210391 0.02067541   0.1895514    0.270599      0
 > oth.y1.o=as.data.frame(mean_se(Y=data$other1415[data$dist=="OUSD" & data$vx1415==1],
 +      id=data$matchid[data$dist=="OUSD" & data$vx1415==1]))
-        N       Mean       SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 1330 0.01203008 0.109061 0.002568585 0.006995648   0.0170645
+        N       Mean       SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 1330 0.01203008 0.109061 0.002568585 0.006995648   0.0170645      0
 > errorloc.y1.o=as.data.frame(mean_se(Y=data$error1415[data$dist=="OUSD" & data$vx1415==1],
 +      id=data$matchid[data$dist=="OUSD" & data$vx1415==1]))
-        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 1330 0.04736842 0.2125055 0.008095772  0.03150071  0.06323613
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 1330 0.04736842 0.2125055 0.008095772  0.03150071  0.06323613      0
 > 
 > doc.y2.o=as.data.frame(mean_se(Y=data$doc1516[data$dist=="OUSD" & data$vx1516==1],
 +      id=data$matchid[data$dist=="OUSD" & data$vx1516==1]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 1518 0.6100132 0.4879077 0.01820787   0.5743258   0.6457006
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 1518 0.6100132 0.4879077 0.01820787   0.5743258   0.6457006      0
 > sch.y2.o=as.data.frame(mean_se(Y=data$school1516[data$dist=="OUSD" & data$vx1516==1],
 +      id=data$matchid[data$dist=="OUSD" & data$vx1516==1]))
-        N      Mean        SD Robust SE Lower 95%CI Upper 95%CI
-[1,] 1518 0.3366271 0.4727119 0.0206878   0.2960791   0.3771752
+        N      Mean        SD Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 1518 0.3366271 0.4727119 0.0206878   0.2960791   0.3771752      0
 > oth.y2.o=as.data.frame(mean_se(Y=data$other1516[data$dist=="OUSD" & data$vx1516==1],
 +      id=data$matchid[data$dist=="OUSD" & data$vx1516==1]))
-        N        Mean         SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 1518 0.009881423 0.09894559 0.002323775 0.005326824  0.01443602
+        N        Mean         SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 1518 0.009881423 0.09894559 0.002323775 0.005326824  0.01443602      0
 > errorloc.y2.o=as.data.frame(mean_se(Y=data$error1516[data$dist=="OUSD" & data$vx1516==1],
 +      id=data$matchid[data$dist=="OUSD" & data$vx1516==1]))
-        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 1518 0.04347826 0.2039983 0.007519104  0.02874082   0.0582157
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 1518 0.04347826 0.2039983 0.007519104  0.02874082   0.0582157      0
 > 
 > doc.y3.o=as.data.frame(mean_se(Y=data$doc1617[data$dist=="OUSD" & data$vx1617==1],
 +      id=data$matchid[data$dist=="OUSD" & data$vx1617==1]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 1437 0.5845511 0.4929708 0.02412812     0.53726   0.6318423
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 1437 0.5845511 0.4929708 0.02412812     0.53726   0.6318423      0
 > sch.y3.o=as.data.frame(mean_se(Y=data$school1617[data$dist=="OUSD" & data$vx1617==1],
 +      id=data$matchid[data$dist=="OUSD" & data$vx1617==1]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 1437 0.3785665 0.4851986 0.02609785   0.3274147   0.4297182
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 1437 0.3785665 0.4851986 0.02609785   0.3274147   0.4297182      0
 > oth.y3.o=as.data.frame(mean_se(Y=data$other1617[data$dist=="OUSD" & data$vx1617==1],
 +      id=data$matchid[data$dist=="OUSD" & data$vx1617==1]))
-        N        Mean         SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 1437 0.008350731 0.09103166 0.002923633 0.002620409  0.01408105
+        N        Mean         SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 1437 0.008350731 0.09103166 0.002923633 0.002620409  0.01408105  0.004
 > errorloc.y3.o=as.data.frame(mean_se(Y=data$error1617[data$dist=="OUSD" & data$vx1617==1],
 +      id=data$matchid[data$dist=="OUSD" & data$vx1617==1]))
-        N       Mean       SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 1437 0.02853166 0.166544 0.005308946  0.01812613   0.0389372
+        N       Mean       SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 1437 0.02853166 0.166544 0.005308946  0.01812613   0.0389372      0
 > 
 > doc.y1.w=as.data.frame(mean_se(Y=data$doc1415[data$dist=="WCCUSD" & data$vx1415==1],
 +      id=data$matchid[data$dist=="WCCUSD" & data$vx1415==1]))
-        N      Mean       SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2451 0.9012648 0.298367 0.008362307   0.8848747   0.9176549
+        N      Mean       SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2451 0.9012648 0.298367 0.008362307   0.8848747   0.9176549      0
 > sch.y1.w=as.data.frame(mean_se(Y=data$school1415[data$dist=="WCCUSD" & data$vx1415==1],
 +      id=data$matchid[data$dist=="WCCUSD" & data$vx1415==1]))
-        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2451 0.01713586 0.1298041 0.002993845  0.01126793   0.0230038
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2451 0.01713586 0.1298041 0.002993845  0.01126793   0.0230038      0
 > oth.y1.w=as.data.frame(mean_se(Y=data$other1415[data$dist=="WCCUSD" & data$vx1415==1],
 +      id=data$matchid[data$dist=="WCCUSD" & data$vx1415==1]))
-        N       Mean       SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2451 0.04487964 0.207082 0.004383555  0.03628787  0.05347141
+        N       Mean       SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2451 0.04487964 0.207082 0.004383555  0.03628787  0.05347141      0
 > errorloc.y1.w=as.data.frame(mean_se(Y=data$error1415[data$dist=="WCCUSD" & data$vx1415==1],
 +      id=data$matchid[data$dist=="WCCUSD" & data$vx1415==1]))
-        N       Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2451 0.03671971 0.1881112 0.00427324  0.02834416  0.04509526
+        N       Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2451 0.03671971 0.1881112 0.00427324  0.02834416  0.04509526      0
 > 
 > doc.y2.w=as.data.frame(mean_se(Y=data$doc1516[data$dist=="WCCUSD" & data$vx1516==1],
 +      id=data$matchid[data$dist=="WCCUSD" & data$vx1516==1]))
-        N      Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2523 0.9171621 0.2756917 0.009114194   0.8992983   0.9350259
+        N      Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2523 0.9171621 0.2756917 0.009114194   0.8992983   0.9350259      0
 > sch.y2.w=as.data.frame(mean_se(Y=data$school1516[data$dist=="WCCUSD" & data$vx1516==1],
 +      id=data$matchid[data$dist=="WCCUSD" & data$vx1516==1]))
-        N        Mean         SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2523 0.007134364 0.08418001 0.001816677 0.003573678  0.01069505
+        N        Mean         SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2523 0.007134364 0.08418001 0.001816677 0.003573678  0.01069505      0
 > oth.y2.w=as.data.frame(mean_se(Y=data$other1516[data$dist=="WCCUSD" & data$vx1516==1],
 +      id=data$matchid[data$dist=="WCCUSD" & data$vx1516==1]))
-        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2523 0.04795878 0.2137214 0.005329137  0.03751367  0.05840389
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2523 0.04795878 0.2137214 0.005329137  0.03751367  0.05840389      0
 > errorloc.y2.w=as.data.frame(mean_se(Y=data$error1516[data$dist=="WCCUSD" & data$vx1516==1],
 +      id=data$matchid[data$dist=="WCCUSD" & data$vx1516==1]))
-        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2523 0.02774475 0.1642732 0.004705079  0.01852279   0.0369667
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2523 0.02774475 0.1642732 0.004705079  0.01852279   0.0369667      0
 > 
 > doc.y3.w=as.data.frame(mean_se(Y=data$doc1617[data$dist=="WCCUSD" & data$vx1617==1],
 +      id=data$matchid[data$dist=="WCCUSD" & data$vx1617==1]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2155 0.9215777 0.2688973 0.00640421   0.9090255     0.93413
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2155 0.9215777 0.2688973 0.00640421   0.9090255     0.93413      0
 > sch.y3.w=as.data.frame(mean_se(Y=data$school1617[data$dist=="WCCUSD" & data$vx1617==1],
 +      id=data$matchid[data$dist=="WCCUSD" & data$vx1617==1]))
-        N        Mean         SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2155 0.004640371 0.06797781 0.001459418 0.001779911 0.007500831
+        N        Mean         SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2155 0.004640371 0.06797781 0.001459418 0.001779911 0.007500831  0.001
 > oth.y3.w=as.data.frame(mean_se(Y=data$other1617[data$dist=="WCCUSD" & data$vx1617==1],
 +      id=data$matchid[data$dist=="WCCUSD" & data$vx1617==1]))
-        N       Mean       SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2155 0.05336427 0.224811 0.005155436  0.04325961  0.06346892
+        N       Mean       SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2155 0.05336427 0.224811 0.005155436  0.04325961  0.06346892      0
 > errorloc.y3.w=as.data.frame(mean_se(Y=data$error1617[data$dist=="WCCUSD" & data$vx1617==1],
 +      id=data$matchid[data$dist=="WCCUSD" & data$vx1617==1]))
-        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2155 0.02041763 0.1414568 0.003325871  0.01389893  0.02693634
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2155 0.02041763 0.1414568 0.003325871  0.01389893  0.02693634      0
 > 
 > #-------------------------------------
 > # vaccine location, including non vaccinated
@@ -851,129 +853,129 @@ The following objects are masked from ‘package:base’:
 > 
 > doc.comp.y1.o=as.data.frame(mean_se(Y=data$doccomp1415[data$dist=="OUSD"],
 +      id=data$matchid[data$dist=="OUSD"]))
-        N     Mean        SD Robust SE Lower 95%CI Upper 95%CI
-[1,] 2246 0.420748 0.4937891 0.0183963   0.3846912   0.4568048
+        N     Mean        SD Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246 0.420748 0.4937891 0.0183963   0.3846912   0.4568048      0
 > sch.comp.y1.o=as.data.frame(mean_se(Y=data$schoolcomp1415[data$dist=="OUSD"],
 +      id=data$matchid[data$dist=="OUSD"]))
-        N      Mean       SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2246 0.1362422 0.343122 0.01329378   0.1101864    0.162298
+        N      Mean       SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246 0.1362422 0.343122 0.01329378   0.1101864    0.162298      0
 > oth.comp.y1.o=as.data.frame(mean_se(Y=data$othercomp1415[data$dist=="OUSD"],
 +      id=data$matchid[data$dist=="OUSD"]))
-        N        Mean         SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2246 0.007123776 0.08412002 0.001559482 0.004067191  0.01018036
+        N        Mean         SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246 0.007123776 0.08412002 0.001559482 0.004067191  0.01018036      0
 > novxloc.comp.y1.o=as.data.frame(mean_se(Y=data$novxcomp1415[data$dist=="OUSD"],
 +      id=data$matchid[data$dist=="OUSD"]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2246 0.4078362 0.4915419 0.01793349   0.3726865   0.4429858
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246 0.4078362 0.4915419 0.01793349   0.3726865   0.4429858      0
 > errorloc.comp.y1.o=as.data.frame(mean_se(Y=data$errorcomp1415[data$dist=="OUSD"],
 +      id=data$matchid[data$dist=="OUSD"]))
-        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2246 0.02804987 0.1651521 0.004354417  0.01951521  0.03658452
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246 0.02804987 0.1651521 0.004354417  0.01951521  0.03658452      0
 > 
 > doc.comp.y2.o=as.data.frame(mean_se(Y=data$doccomp1516[data$dist=="OUSD"],
 +      id=data$matchid[data$dist=="OUSD"]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2246 0.4122885 0.4923562 0.01348383   0.3858602   0.4387168
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246 0.4122885 0.4923562 0.01348383   0.3858602   0.4387168      0
 > sch.comp.y2.o=as.data.frame(mean_se(Y=data$schoolcomp1516[data$dist=="OUSD"],
 +      id=data$matchid[data$dist=="OUSD"]))
-        N      Mean        SD Robust SE Lower 95%CI Upper 95%CI
-[1,] 2246 0.2275156 0.4193215 0.0152326   0.1976597   0.2573715
+        N      Mean        SD Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246 0.2275156 0.4193215 0.0152326   0.1976597   0.2573715      0
 > oth.comp.y2.o=as.data.frame(mean_se(Y=data$othercomp1516[data$dist=="OUSD"],
 +      id=data$matchid[data$dist=="OUSD"]))
-        N       Mean         SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2246 0.00667854 0.08146712 0.001577537 0.003586568 0.009770511
+        N       Mean         SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246 0.00667854 0.08146712 0.001577537 0.003586568 0.009770511      0
 > novxloc.comp.y2.o=as.data.frame(mean_se(Y=data$novxcomp1516[data$dist=="OUSD"],
 +      id=data$matchid[data$dist=="OUSD"]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2246 0.3241318 0.4681538 0.01228592   0.3000514   0.3482122
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246 0.3241318 0.4681538 0.01228592   0.3000514   0.3482122      0
 > errorloc.comp.y2.o=as.data.frame(mean_se(Y=data$errorcomp1516[data$dist=="OUSD"],
 +      id=data$matchid[data$dist=="OUSD"]))
-        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2246 0.02938557 0.1689224 0.005040758  0.01950569  0.03926546
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246 0.02938557 0.1689224 0.005040758  0.01950569  0.03926546      0
 > 
 > doc.comp.y3.o=as.data.frame(mean_se(Y=data$doccomp1617[data$dist=="OUSD"],
 +      id=data$matchid[data$dist=="OUSD"]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2246 0.3739982 0.4839709 0.01224917   0.3499899   0.3980066
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246 0.3739982 0.4839709 0.01224917   0.3499899   0.3980066      0
 > sch.comp.y3.o=as.data.frame(mean_se(Y=data$schoolcomp1617[data$dist=="OUSD"],
 +      id=data$matchid[data$dist=="OUSD"]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2246 0.2422084 0.4285151 0.02007817   0.2028552   0.2815616
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246 0.2422084 0.4285151 0.02007817   0.2028552   0.2815616      0
 > oth.comp.y3.o=as.data.frame(mean_se(Y=data$othercomp1617[data$dist=="OUSD"],
 +      id=data$matchid[data$dist=="OUSD"]))
-        N        Mean         SD Robust SE Lower 95%CI Upper 95%CI
-[1,] 2246 0.005342832 0.07291538 0.0018722  0.00167332 0.009012344
+        N        Mean         SD Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246 0.005342832 0.07291538 0.0018722  0.00167332 0.009012344  0.004
 > novxloc.comp.y3.o=as.data.frame(mean_se(Y=data$novxcomp1617[data$dist=="OUSD"],
 +      id=data$matchid[data$dist=="OUSD"]))
-        N      Mean       SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 2246 0.3601959 0.480164 0.01428712   0.3321932   0.3881987
+        N      Mean       SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246 0.3601959 0.480164 0.01428712   0.3321932   0.3881987      0
 > errorloc.comp.y3.o=as.data.frame(mean_se(Y=data$errorcomp1617[data$dist=="OUSD"],
 +      id=data$matchid[data$dist=="OUSD"]))
-        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 2246 0.01825467 0.1339008 0.003504064  0.01138671  0.02512264
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246 0.01825467 0.1339008 0.003504064  0.01138671  0.02512264      0
 > 
 > doc.comp.y1.w=as.data.frame(mean_se(Y=data$doccomp1415[data$dist=="WCCUSD"],
 +      id=data$matchid[data$dist=="WCCUSD"]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 3824 0.5776674 0.4939955 0.01545204   0.5473814   0.6079534
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 3824 0.5776674 0.4939955 0.01545204   0.5473814   0.6079534      0
 > sch.comp.y1.w=as.data.frame(mean_se(Y=data$schoolcomp1415[data$dist=="WCCUSD"],
 +      id=data$matchid[data$dist=="WCCUSD"]))
-        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 3824 0.01098326 0.1042376 0.001900888 0.007257523    0.014709
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 3824 0.01098326 0.1042376 0.001900888 0.007257523    0.014709      0
 > oth.comp.y1.w=as.data.frame(mean_se(Y=data$othercomp1415[data$dist=="WCCUSD"],
 +      id=data$matchid[data$dist=="WCCUSD"]))
-        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 3824 0.02876569 0.1671692 0.002566764  0.02373483  0.03379655
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 3824 0.02876569 0.1671692 0.002566764  0.02373483  0.03379655      0
 > novxloc.comp.y1.w=as.data.frame(mean_se(Y=data$novxcomp1415[data$dist=="WCCUSD"],
 +      id=data$matchid[data$dist=="WCCUSD"]))
-        N      Mean        SD Robust SE Lower 95%CI Upper 95%CI
-[1,] 3824 0.3590481 0.4797841 0.0135877   0.3324162     0.38568
+        N      Mean        SD Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 3824 0.3590481 0.4797841 0.0135877   0.3324162     0.38568      0
 > errorloc.comp.y1.w=as.data.frame(mean_se(Y=data$errorcomp1415[data$dist=="WCCUSD"],
 +      id=data$matchid[data$dist=="WCCUSD"]))
-        N       Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 3824 0.02353556 0.1516168 0.00263433  0.01837228  0.02869885
+        N       Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 3824 0.02353556 0.1516168 0.00263433  0.01837228  0.02869885      0
 > 
 > doc.comp.y2.w=as.data.frame(mean_se(Y=data$doccomp1516[data$dist=="WCCUSD"],
 +      id=data$matchid[data$dist=="WCCUSD"]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 3824 0.6051255 0.4888876 0.01211088   0.5813882   0.6288629
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 3824 0.6051255 0.4888876 0.01211088   0.5813882   0.6288629      0
 > sch.comp.y2.w=as.data.frame(mean_se(Y=data$schoolcomp1516[data$dist=="WCCUSD"],
 +      id=data$matchid[data$dist=="WCCUSD"]))
-        N        Mean         SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 3824 0.004707113 0.06845569 0.001210926 0.002333699 0.007080527
+        N        Mean         SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 3824 0.004707113 0.06845569 0.001210926 0.002333699 0.007080527      0
 > oth.comp.y2.w=as.data.frame(mean_se(Y=data$othercomp1516[data$dist=="WCCUSD"],
 +      id=data$matchid[data$dist=="WCCUSD"]))
-        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 3824 0.03164226 0.1750687 0.003492635   0.0247967  0.03848782
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 3824 0.03164226 0.1750687 0.003492635   0.0247967  0.03848782      0
 > novxloc.comp.y2.w=as.data.frame(mean_se(Y=data$novxcomp1516[data$dist=="WCCUSD"],
 +      id=data$matchid[data$dist=="WCCUSD"]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 3824 0.3402197 0.4738449 0.01065148   0.3193428   0.3610966
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 3824 0.3402197 0.4738449 0.01065148   0.3193428   0.3610966      0
 > errorloc.comp.y2.w=as.data.frame(mean_se(Y=data$errorcomp1516[data$dist=="WCCUSD"],
 +      id=data$matchid[data$dist=="WCCUSD"]))
-        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI
-[1,] 3824 0.01830544 0.1340711 0.003069367  0.01228948   0.0243214
+        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 3824 0.01830544 0.1340711 0.003069367  0.01228948   0.0243214      0
 > 
 > doc.comp.y3.w=as.data.frame(mean_se(Y=data$doccomp1617[data$dist=="WCCUSD"],
 +      id=data$matchid[data$dist=="WCCUSD"]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 3824 0.5193515 0.4996907 0.01402011   0.4918721   0.5468309
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 3824 0.5193515 0.4996907 0.01402011   0.4918721   0.5468309      0
 > sch.comp.y3.w=as.data.frame(mean_se(Y=data$schoolcomp1617[data$dist=="WCCUSD"],
 +      id=data$matchid[data$dist=="WCCUSD"]))
-        N        Mean         SD    Robust SE Lower 95%CI Upper 95%CI
-[1,] 3824 0.002615063 0.05107746 0.0008117447 0.001024043 0.004206082
+        N        Mean         SD    Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 3824 0.002615063 0.05107746 0.0008117447 0.001024043 0.004206082  0.001
 > oth.comp.y3.w=as.data.frame(mean_se(Y=data$othercomp1617[data$dist=="WCCUSD"],
 +      id=data$matchid[data$dist=="WCCUSD"]))
-        N       Mean        SD Robust SE Lower 95%CI Upper 95%CI
-[1,] 3824 0.03007322 0.1708112 0.0027078  0.02476593  0.03538051
+        N       Mean        SD Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 3824 0.03007322 0.1708112 0.0027078  0.02476593  0.03538051      0
 > novxloc.comp.y3.w=as.data.frame(mean_se(Y=data$novxcomp1617[data$dist=="WCCUSD"],
 +      id=data$matchid[data$dist=="WCCUSD"]))
-        N     Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 3824 0.436454 0.4960103 0.01240686   0.4121365   0.4607714
+        N     Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 3824 0.436454 0.4960103 0.01240686   0.4121365   0.4607714      0
 > errorloc.comp.y3.w=as.data.frame(mean_se(Y=data$errorcomp1617[data$dist=="WCCUSD"],
 +      id=data$matchid[data$dist=="WCCUSD"]))
-        N       Mean        SD  Robust SE Lower 95%CI Upper 95%CI
-[1,] 3824 0.01150628 0.1066623 0.00175804 0.008060517  0.01495203
+        N       Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 3824 0.01150628 0.1066623 0.00175804 0.008060517  0.01495203      0
 > 
 > # future vaccination
 > table(data$vxplan,data$dist)
@@ -1002,4 +1004,4 @@ The following objects are masked from ‘package:base’:
 > 
 > proc.time()
    user  system elapsed 
-  1.786   0.295   2.314 
+  1.775   0.225   2.023 

@@ -193,4 +193,4 @@ The following object is masked from ‘package:dplyr’:
 > 
 > proc.time()
    user  system elapsed 
-  0.995   0.191   1.343 
+  1.011   0.211   1.420 

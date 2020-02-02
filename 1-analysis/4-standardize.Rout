@@ -472,4 +472,4 @@ Using race as id variables
 > 
 > proc.time()
    user  system elapsed 
-  1.688   0.261   1.968 
+  1.655   0.312   2.126 
