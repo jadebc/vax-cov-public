@@ -13,20 +13,22 @@ mean_se=function (Y, id=NULL, print = TRUE) {
     rfit <- coeftest(fit, vcovCL)
     lb <- rfit[1, 1] - 1.96 * rfit[1, 2]
     ub <- rfit[1, 1] + 1.96 * rfit[1, 2]
+    pval <- round(rfit[1, 4], 3)
     mean_ci <- matrix(c(n.sub, rfit[1, 1], sd(mudat$Y), rfit[1,2], 
-                        lb, ub), nrow = 1, ncol = 6)
+                        lb, ub, pval), nrow = 1, ncol = 7)
   }else{
     mudat <- data.frame(Y = Y)
     n.sub <- length(Y)
     fit <- glm(Y ~ 1, family = gaussian, data = mudat)
     lb <- summary(fit)$coef[1, 1] - 1.96 * summary(fit)$coef[1, 2]
     ub <- summary(fit)$coef[1, 1] + 1.96 * summary(fit)$coef[1, 2]
+    pval <- round(summary(fit)$coef[1,4], 3)
     mean_ci <- matrix(c(n.sub, summary(fit)$coef[1, 1], sd(mudat$Y), summary(fit)$coef[1,2], 
-                        lb, ub), nrow = 1, ncol = 6)
+                        lb, ub, pval), nrow = 1, ncol = 7)
   }
-
+  
   colnames(mean_ci) <- c("N", "Mean", "SD", "Robust SE", "Lower 95%CI", 
-                         "Upper 95%CI")
+                         "Upper 95%CI", "pvalue")
   if (print == TRUE) 
     print(mean_ci)
   return(mean_ci)
@@ -85,11 +87,12 @@ format.glm=function(rfit,family){
   se=rfit[2,2]
   lb=pt.est-(qnorm(0.975)*se)
   ub=pt.est+(qnorm(0.975)*se)
+  pval=rfit[2,4]
   if(family=="binomial"){
-    out=exp(cbind(pt.est,lb,ub))
+    out=exp(cbind(pt.est,lb,ub,pval))
   }
   else{
-    out=cbind(pt.est,lb,ub)
+    out=cbind(pt.est,lb,ub,pval)
   }
   return(out)
 }
