@@ -385,7 +385,9 @@ The following objects are masked from ‘package:base’:
 > 
 > data$spray1415=ifelse(data$vxtype1415=="Spray",1,0)
 > data$spray1516=ifelse(data$vxtype1516=="Spray",1,0)
-> data$spray1617=ifelse(data$vxtype1617=="Spray",1,0)
+> 
+> # if spray in 2016-17, replace as error
+> data$vxtype1617=ifelse(data$vxtype1617=="Spray","Error/Missing/Don't know",data$vxtype1617)
 > 
 > data$error1415=ifelse(data$vxtype1415=="Error/Missing/Don't know",1,0)
 > data$error1516=ifelse(data$vxtype1516=="Error/Missing/Don't know",1,0)
@@ -406,9 +408,8 @@ The following objects are masked from ‘package:base’:
 > table(data$vxtype1617[data$vx1617==1],data$dist[data$vx1617==1])
                           
                            OUSD WCCUSD
-  Error/Missing/Don't know  110     69
+  Error/Missing/Don't know  260    186
   Shot                     1177   1969
-  Spray                     150    117
 > 
 > shot.y1.o=as.data.frame(mean_se(Y=data$shot1415[data$dist=="OUSD" & data$vx1415==1],
 +        id=data$matchid[data$dist=="OUSD" & data$vx1415==1]))
@@ -466,27 +467,19 @@ The following objects are masked from ‘package:base’:
 +        id=data$matchid[data$dist=="OUSD" & data$vx1617==1]))
         N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
 [1,] 1437 0.8190675 0.3850963 0.01818973   0.7834156   0.8547194      0
-> spray.y3.o=as.data.frame(mean_se(Y=data$spray1617[data$dist=="OUSD" & data$vx1617==1],
-+        id=data$matchid[data$dist=="OUSD" & data$vx1617==1]))
-        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
-[1,] 1437 0.1043841 0.3058647 0.01194487  0.08097219   0.1277961      0
 > error.y3.o=as.data.frame(mean_se(Y=data$error1617[data$dist=="OUSD" & data$vx1617==1],
 +        id=data$matchid[data$dist=="OUSD" & data$vx1617==1]))
-        N       Mean       SD   Robust SE Lower 95%CI Upper 95%CI pvalue
-[1,] 1437 0.07654836 0.265966 0.009357592  0.05820748  0.09488925      0
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 1437 0.1809325 0.3850963 0.01818973   0.1452806   0.2165844      0
 > 
 > shot.y3.w=as.data.frame(mean_se(Y=data$shot1617[data$dist=="WCCUSD" & data$vx1617==1],
 +        id=data$matchid[data$dist=="WCCUSD" & data$vx1617==1]))
         N      Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
 [1,] 2155 0.9136891 0.2808878 0.008314981   0.8973917   0.9299865      0
-> spray.y3.w=as.data.frame(mean_se(Y=data$spray1617[data$dist=="WCCUSD" & data$vx1617==1],
-+        id=data$matchid[data$dist=="WCCUSD" & data$vx1617==1]))
-        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
-[1,] 2155 0.05429234 0.2266462 0.006068082   0.0423989  0.06618578      0
 > error.y3.w=as.data.frame(mean_se(Y=data$error1617[data$dist=="WCCUSD" & data$vx1617==1],
 +        id=data$matchid[data$dist=="WCCUSD" & data$vx1617==1]))
-        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
-[1,] 2155 0.03201856 0.1760902 0.004218008  0.02375127  0.04028586      0
+        N      Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2155 0.0863109 0.2808878 0.008314981  0.07001354   0.1026083      0
 > 
 > #-------------------------------------
 > # vaccine type, including non vaccinated
@@ -531,9 +524,8 @@ The following objects are masked from ‘package:base’:
 > table(data$vxtype1617comp[data$vx1617==1],data$dist[data$vx1617==1])
                           
                            OUSD WCCUSD
-  Error/Missing/Don't know  110     69
+  Error/Missing/Don't know  260    186
   Shot                     1177   1969
-  Spray                     150    117
 > 
 > shot.comp.y1.o=as.data.frame(mean_se(Y=data$shotcomp1415[data$dist=="OUSD"],
 +        id=data$matchid[data$dist=="OUSD"]))
@@ -609,16 +601,16 @@ The following objects are masked from ‘package:base’:
 [1,] 2246 0.5240427 0.4995328 0.01651482   0.4916737   0.5564118      0
 > spray.comp.y3.o=as.data.frame(mean_se(Y=data$spraycomp1617[data$dist=="OUSD"],
 +        id=data$matchid[data$dist=="OUSD"]))
-        N      Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
-[1,] 2246 0.0667854 0.2497056 0.007539572  0.05200784  0.08156296      0
+        N Mean SD Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246    0  0       NaN         NaN         NaN    NaN
 > novx.comp.y3.o=as.data.frame(mean_se(Y=data$novxcomp1617[data$dist=="OUSD"],
 +        id=data$matchid[data$dist=="OUSD"]))
         N      Mean       SD  Robust SE Lower 95%CI Upper 95%CI pvalue
 [1,] 2246 0.3601959 0.480164 0.01428712   0.3321932   0.3881987      0
 > error.comp.y3.o=as.data.frame(mean_se(Y=data$errorcomp1617[data$dist=="OUSD"],
 +        id=data$matchid[data$dist=="OUSD"]))
-        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
-[1,] 2246 0.04897596 0.2158658 0.006307338  0.03661358  0.06133834      0
+        N      Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 2246 0.1157614 0.3200098 0.01191816  0.09240176    0.139121      0
 > 
 > shot.comp.y3.w=as.data.frame(mean_se(Y=data$shotcomp1617[data$dist=="WCCUSD"],
 +        id=data$matchid[data$dist=="WCCUSD"]))
@@ -626,8 +618,8 @@ The following objects are masked from ‘package:base’:
 [1,] 3824 0.5149059 0.4998431 0.01468672   0.4861199   0.5436918      0
 > spray.comp.y3.w=as.data.frame(mean_se(Y=data$spraycomp1617[data$dist=="WCCUSD"],
 +        id=data$matchid[data$dist=="WCCUSD"]))
-        N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
-[1,] 3824 0.03059623 0.1722436 0.003145689  0.02443068  0.03676178      0
+        N Mean SD Robust SE Lower 95%CI Upper 95%CI pvalue
+[1,] 3824    0  0       NaN         NaN         NaN    NaN
 > novx.comp.y3.w=as.data.frame(mean_se(Y=data$novxcomp1617[data$dist=="WCCUSD"],
 +        id=data$matchid[data$dist=="WCCUSD"]))
         N     Mean        SD  Robust SE Lower 95%CI Upper 95%CI pvalue
@@ -635,7 +627,7 @@ The following objects are masked from ‘package:base’:
 > error.comp.y3.w=as.data.frame(mean_se(Y=data$errorcomp1617[data$dist=="WCCUSD"],
 +        id=data$matchid[data$dist=="WCCUSD"]))
         N       Mean        SD   Robust SE Lower 95%CI Upper 95%CI pvalue
-[1,] 3824 0.01804393 0.1331277 0.002202344  0.01372734  0.02236053      0
+[1,] 3824 0.04864017 0.2151428 0.004116013  0.04057278  0.05670755      0
 > 
 > #-------------------------------------
 > # vaccine location 
@@ -1004,4 +996,4 @@ The following objects are masked from ‘package:base’:
 > 
 > proc.time()
    user  system elapsed 
-  1.775   0.225   2.023 
+  1.706   0.231   1.956 

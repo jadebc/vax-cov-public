@@ -859,4 +859,4 @@ due to missing values in the outcome
 > 
 > proc.time()
    user  system elapsed 
-  1.752   0.222   1.991 
+  1.605   0.203   1.816 

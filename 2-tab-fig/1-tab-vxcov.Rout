@@ -17,8 +17,6 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
-[Previously saved workspace restored]
-
 > ########################################
 > # Shoo the Flu evaluation
 > # Analysis of student influenza vaccination coverage 
@@ -154,12 +152,14 @@ The following object is masked from ‘package:dplyr’:
 +   diff = pt.est.ci.f(diff_res, decimals = 0, scale = 100)
 + )
 > 
-> tab = tab %>% mutate(yr=c("2014-15","2015-16","2016-17","2017-18")) %>%
-+   dplyr::select(yr, ousd, wcc, diff)
+> tab = tab %>% 
++   mutate(yr=c("2014-15","2015-16","2016-17","2017-18")) %>%
++   dplyr::select(yr, ousd, wcc, diff) %>%
++   mutate(pval = sprintf("%0.03f",diff_res$pval))
 > 
 > write.csv(tab, file = paste0(tab_path, "vaxcov_diff.csv"))
 > 
 > 
 > proc.time()
    user  system elapsed 
-  1.057   0.189   1.413 
+  1.063   0.199   1.414 

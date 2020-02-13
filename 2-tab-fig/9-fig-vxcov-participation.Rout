@@ -17,6 +17,8 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
+[Previously saved workspace restored]
+
 > ########################################
 > # Shoo the Flu evaluation
 > # Analysis of student influenza vaccination coverage 
@@ -126,4 +128,4 @@ null device
 > 
 > proc.time()
    user  system elapsed 
-  1.081   0.132   1.216 
+  1.097   0.134   1.234 
