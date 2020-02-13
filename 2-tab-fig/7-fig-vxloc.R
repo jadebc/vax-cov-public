@@ -203,6 +203,17 @@ ggplot(vxloc,aes(y=Mean,x=dist.new,fill=loc))+geom_bar(stat="identity", width=0.
 dev.off()
 
 
+#-------------------------------------
+# table
+#-------------------------------------
+loc.tab = vxloc %>% 
+  dplyr::select(dist, loc, yr, Mean, lower, upper) %>%
+  mutate(est = pt.est.ci.f(est = Mean, lb = lower, ub = upper, decimals = 1, scale=1)) %>%
+  dplyr::select(-c(Mean, lower, upper))
+
+tab.out = spread(loc.tab, key = yr, value = est)
+
+write.csv(tab.out, file = paste0(tab_path, "tab-vxloc.csv"))
 
 
 
