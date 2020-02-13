@@ -126,7 +126,9 @@ data$shot1617=ifelse(data$vxtype1617=="Shot",1,0)
 
 data$spray1415=ifelse(data$vxtype1415=="Spray",1,0)
 data$spray1516=ifelse(data$vxtype1516=="Spray",1,0)
-data$spray1617=ifelse(data$vxtype1617=="Spray",1,0)
+
+# if spray in 2016-17, replace as error
+data$vxtype1617=ifelse(data$vxtype1617=="Spray","Error/Missing/Don't know",data$vxtype1617)
 
 data$error1415=ifelse(data$vxtype1415=="Error/Missing/Don't know",1,0)
 data$error1516=ifelse(data$vxtype1516=="Error/Missing/Don't know",1,0)
@@ -166,14 +168,10 @@ error.y2.w=as.data.frame(mean_se(Y=data$error1516[data$dist=="WCCUSD" & data$vx1
 
 shot.y3.o=as.data.frame(mean_se(Y=data$shot1617[data$dist=="OUSD" & data$vx1617==1],
        id=data$matchid[data$dist=="OUSD" & data$vx1617==1]))
-spray.y3.o=as.data.frame(mean_se(Y=data$spray1617[data$dist=="OUSD" & data$vx1617==1],
-       id=data$matchid[data$dist=="OUSD" & data$vx1617==1]))
 error.y3.o=as.data.frame(mean_se(Y=data$error1617[data$dist=="OUSD" & data$vx1617==1],
        id=data$matchid[data$dist=="OUSD" & data$vx1617==1]))
 
 shot.y3.w=as.data.frame(mean_se(Y=data$shot1617[data$dist=="WCCUSD" & data$vx1617==1],
-       id=data$matchid[data$dist=="WCCUSD" & data$vx1617==1]))
-spray.y3.w=as.data.frame(mean_se(Y=data$spray1617[data$dist=="WCCUSD" & data$vx1617==1],
        id=data$matchid[data$dist=="WCCUSD" & data$vx1617==1]))
 error.y3.w=as.data.frame(mean_se(Y=data$error1617[data$dist=="WCCUSD" & data$vx1617==1],
        id=data$matchid[data$dist=="WCCUSD" & data$vx1617==1]))
