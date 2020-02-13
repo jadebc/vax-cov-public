@@ -1,0 +1,260 @@
+
+R version 3.6.1 (2019-07-05) -- "Action of the Toes"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> ########################################
+> # Vaccine coverage survey conducted in March 2017
+> # Create figures for presentation
+> # vaccination type by year
+> ########################################
+> 
+> rm(list=ls())
+> # define directories, load libraries
+> source(here::here("0-config.R"))
+here() starts at /Users/jadederong/Documents/CRG/flu/vax-cov-public
+
+Attaching package: ‘plyr’
+
+The following object is masked from ‘package:here’:
+
+    here
+
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:plyr’:
+
+    arrange, count, desc, failwith, id, mutate, rename, summarise,
+    summarize
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+
+Attaching package: ‘reshape2’
+
+The following object is masked from ‘package:tidyr’:
+
+    smiths
+
+Loading required package: nnls
+Super Learner
+Version: 2.0-24
+Package created on 2018-08-10
+
+gdata: read.xls support for 'XLS' (Excel 97-2004) files ENABLED.
+
+gdata: read.xls support for 'XLSX' (Excel 2007+) files ENABLED.
+
+Attaching package: ‘gdata’
+
+The following objects are masked from ‘package:dplyr’:
+
+    combine, first, last
+
+The following object is masked from ‘package:stats’:
+
+    nobs
+
+The following object is masked from ‘package:utils’:
+
+    object.size
+
+The following object is masked from ‘package:base’:
+
+    startsWith
+
+Loading required package: MASS
+
+Attaching package: ‘MASS’
+
+The following object is masked from ‘package:dplyr’:
+
+    select
+
+## 
+##  Matching (Version 4.9-6, Build Date: 2019-04-07)
+##  See http://sekhon.berkeley.edu/matching for additional documentation.
+##  Please cite software as:
+##   Jasjeet S. Sekhon. 2011. ``Multivariate and Propensity Score Matching
+##   Software with Automated Balance Optimization: The Matching package for R.''
+##   Journal of Statistical Software, 42(7): 1-52. 
+##
+
+> 
+> load(vax_results_2017_path)
+> load(vax_results_2018_path)
+> 
+> shot.comp.y1.o$type="Shot"
+> spray.comp.y1.o$type="Spray"
+> error.comp.y1.o$type="Error/missing/don't know"
+> 
+> shot.comp.y1.o$dist="OUSD"
+> spray.comp.y1.o$dist="OUSD"
+> error.comp.y1.o$dist="OUSD"
+> 
+> shot.comp.y1.o$yr="2014-15"
+> spray.comp.y1.o$yr="2014-15"
+> error.comp.y1.o$yr="2014-15"
+> 
+> shot.comp.y1.w$type="Shot"
+> spray.comp.y1.w$type="Spray"
+> error.comp.y1.w$type="Error/missing/don't know"
+> 
+> shot.comp.y1.w$dist="WCCUSD"
+> spray.comp.y1.w$dist="WCCUSD"
+> error.comp.y1.w$dist="WCCUSD"
+> 
+> shot.comp.y1.w$yr="2014-15"
+> spray.comp.y1.w$yr="2014-15"
+> error.comp.y1.w$yr="2014-15"
+> 
+> shot.comp.y2.o$type="Shot"
+> spray.comp.y2.o$type="Spray"
+> error.comp.y2.o$type="Error/missing/don't know"
+> 
+> shot.comp.y2.o$dist="OUSD"
+> spray.comp.y2.o$dist="OUSD"
+> error.comp.y2.o$dist="OUSD"
+> 
+> shot.comp.y2.o$yr="2015-16"
+> spray.comp.y2.o$yr="2015-16"
+> error.comp.y2.o$yr="2015-16"
+> 
+> shot.comp.y2.w$type="Shot"
+> spray.comp.y2.w$type="Spray"
+> error.comp.y2.w$type="Error/missing/don't know"
+> 
+> shot.comp.y2.w$dist="WCCUSD"
+> spray.comp.y2.w$dist="WCCUSD"
+> error.comp.y2.w$dist="WCCUSD"
+> 
+> shot.comp.y2.w$yr="2015-16"
+> spray.comp.y2.w$yr="2015-16"
+> error.comp.y2.w$yr="2015-16"
+> 
+> shot.comp.y3.o$type="Shot"
+> error.comp.y3.o$type="Error/missing/don't know"
+> 
+> shot.comp.y3.o$dist="OUSD"
+> error.comp.y3.o$dist="OUSD"
+> 
+> shot.comp.y3.o$yr="2016-17"
+> error.comp.y3.o$yr="2016-17"
+> 
+> shot.comp.y3.w$type="Shot"
+> error.comp.y3.w$type="Error/missing/don't know"
+> 
+> shot.comp.y3.w$dist="WCCUSD"
+> error.comp.y3.w$dist="WCCUSD"
+> 
+> shot.comp.y3.w$yr="2016-17"
+> error.comp.y3.w$yr="2016-17"
+> 
+> shot.comp.y4.o$type="Shot"
+> error.comp.y4.o$type="Error/missing/don't know"
+> 
+> shot.comp.y4.o$dist="OUSD"
+> error.comp.y4.o$dist="OUSD"
+> 
+> shot.comp.y4.o$yr="2017-18"
+> error.comp.y4.o$yr="2017-18"
+> 
+> shot.comp.y4.w$type="Shot"
+> error.comp.y4.w$type="Error/missing/don't know"
+> 
+> shot.comp.y4.w$dist="WCCUSD"
+> error.comp.y4.w$dist="WCCUSD"
+> 
+> shot.comp.y4.w$yr="2017-18"
+> error.comp.y4.w$yr="2017-18"
+> 
+> type.graph=rbind(shot.comp.y1.o,spray.comp.y1.o,error.comp.y1.o,
++                  shot.comp.y1.w,spray.comp.y1.w,error.comp.y1.w,
++                  shot.comp.y2.o,spray.comp.y2.o,error.comp.y2.o,
++                  shot.comp.y2.w,spray.comp.y2.w,error.comp.y2.w,
++                  shot.comp.y3.o,error.comp.y3.o,
++                  shot.comp.y3.w,error.comp.y3.w,
++                  shot.comp.y4.o,error.comp.y4.o,
++                  shot.comp.y4.w,error.comp.y4.w)
+> 
+> type.graph$yr=as.factor(type.graph$yr)
+> type.graph$Mean=type.graph$Mean*100
+> type.graph$Mean.f=sprintf("%0.0f",type.graph$Mean)
+> 
+> colnames(type.graph)[5:6]=c("lower","upper")
+> type.graph$lower=type.graph$lower*100
+> type.graph$upper=type.graph$upper*100
+> 
+> type.graph$type=factor(type.graph$type,levels=c("Shot","Spray",
++       "Error/missing/don't know"))
+> levels(type.graph$type)[3]="Error/Missing/Don't know"
+> type.graph$Mean.f[type.graph$yr=="2016-17" & type.graph$dist=="WCCUSD" & type.graph$type=="Spray"]=""
+> type.graph$Mean.f[type.graph$type=="Error/Missing/Don't know"]=""
+> 
+> type.graph$printmean=c(42,15,0,
++                        42,9,0,
++                        
++                        42,17,0,
++                        42,9,0,
++                        
++                        42,0,
++                        42,0,
++                        
++                        42,0,
++                        42,0)
+> 
+> type.graph = type.graph %>% mutate(dist = ifelse(dist=="OUSD", "Intervention", "Comparison"))
+> 
+> cbPalette <- c("#009E73","#CC79A7", "#999999")
+> 
+> pdf(file=paste0(plot_path,"fig-vxtype.pdf"),width=9,height=4)
+> ggplot(type.graph,aes(y=Mean,x=dist,fill=type))+
++   geom_bar(stat="identity", width = 0.8)+
++   scale_fill_manual("",values=cbPalette)+
++   theme_complete_bw()+ylab("Percent")+xlab("")+
++   facet_grid(~yr)+
++   scale_y_continuous(breaks=seq(0,70,5),labels=seq(0,70,5))+
++   geom_text(mapping=aes(label=Mean.f,y=printmean),size=3,show.legend=FALSE) +
++   theme(legend.position = "bottom")
+> dev.off()
+null device 
+          1 
+> 
+> #-------------------------------------
+> # table
+> #-------------------------------------
+> type.tab = type.graph %>% 
++   dplyr::select(dist, type, yr, Mean, lower, upper) %>%
++   mutate(est = pt.est.ci.f(est = Mean, lb = lower, ub = upper, decimals = 1, scale=1)) %>%
++   dplyr::select(-c(Mean, lower, upper))
+> 
+> tab.out = spread(type.tab, key = yr, value = est)
+> 
+> write.csv(tab.out, file = paste0(tab_path, "tab-vxtype.csv"))
+> 
+> proc.time()
+   user  system elapsed 
+  1.289   0.131   1.421 
