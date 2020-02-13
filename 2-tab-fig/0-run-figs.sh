@@ -7,5 +7,6 @@ R CMD BATCH 4-fig-vxcov-edu.R
 R CMD BATCH 5-fig-vxcov-standardized-edu.R
 R CMD BATCH 6-fig-vxcov-standardized-race.R
 R CMD BATCH 7-fig-vxloc.R
-R CMD BATCH 8-fig-vxcov-participation.R
+R CMD BATCH 8-fig-vxtype.R
+R CMD BATCH 9-fig-vxcov-participation.R
 
